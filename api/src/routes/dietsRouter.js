@@ -12,7 +12,7 @@ const dietsRouter = Router();
 // * --------------------------------------
 // * GET ALL DIETS
 // * --------------------------------------
-dietsRouter.get("/", async (req, res) => {
+dietsRouter.get("/diets/", async (req, res) => {
   try {
     const allDiets = await getAllHandler();
 
@@ -27,7 +27,7 @@ dietsRouter.get("/", async (req, res) => {
 // * --------------------------------------
 // * GET ONE DIET - params
 // * --------------------------------------
-dietsRouter.get("/:id", async (req, res) => {
+dietsRouter.get("/diets/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -44,7 +44,7 @@ dietsRouter.get("/:id", async (req, res) => {
 // * --------------------------------------
 // * ADD ONE DIET - query
 // * --------------------------------------
-dietsRouter.post("/add", async (req, res) => {
+dietsRouter.post("/diet/add", async (req, res) => {
   const { newDiet } = req.query;
 
   try {
