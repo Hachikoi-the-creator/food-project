@@ -13,12 +13,18 @@ module.exports = (database) => {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        len: [3, 100],
+      },
     },
     // * --------------------------
     desc: {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        len: [10, 150],
+      },
     },
     // * --------------------------
     healthyness: {
@@ -27,6 +33,7 @@ module.exports = (database) => {
       validate: {
         min: 10,
         max: 100,
+        isNumeric: true,
       },
     },
     // * --------------------------
@@ -43,6 +50,15 @@ module.exports = (database) => {
       },
     },
     // * --------------------------
+    imageUrl: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        len: [10, 120],
+      },
+      unique: true,
+    },
+    // * --------------------------
     // tricky way of storing an Object[]
     /** Expectation example
      * [
@@ -53,6 +69,7 @@ module.exports = (database) => {
      *  },
      * ...
      * ]
+     * https://sequelize.org/docs/v6/advanced-association-concepts/advanced-many-to-many/
      */
     ingredientsList: {
       allowNull: false,
@@ -72,6 +89,7 @@ module.exports = (database) => {
 
           return actuallArr.every((e) => {
             const { name, amount, unit } = e;
+
             const validIngName = name.length > 0 && name.length < 100;
             // num convertion just in case
             const validMetricAmount = !isNaN(Math.round(+amount));

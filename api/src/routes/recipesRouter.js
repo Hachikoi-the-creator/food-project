@@ -17,14 +17,16 @@ const recipesRouter = Router();
 // * GET ALL MATCHES OF NAME - query
 // * --------------------------------------
 recipesRouter.get("/", async (req, res) => {
-  const { reciName, resNum } = req.query;
+  const { name, amount } = req.query;
 
   try {
-    const recipes = await getByNameHandler(reciName, resNum);
-    // extra stuff for better http response 204 doesn't send data back
-    recipes.length
-      ? res.status(200).json({ result: "Resources Found :D", recipes })
-      : res.status(204);
+    const recipes = await getByNameHandler(name, amount);
+    const resultMsg = recipes.length
+      ? "Resources Found :D"
+      : "Couldn't find anything D:";
+
+    // 204 would be the correct response, but would make FE work harder
+    res.status(200).json({ resultMsg, recipes });
   } catch (error) {
     const { method, originalUrl } = req;
 
@@ -50,19 +52,29 @@ recipesRouter.get("/id/:id", async (req, res) => {
 });
 
 // * --------------------------------------
-// * ADD ONE RECIPE
-// * --------------------------------------
+// ? ADD ONE RECIPE
 recipesRouter.post("/add", async (req, res) => {
-  const { name, desc, healthyness, steps, dietTypes } = req.body;
+  // good practice to explicitly get them from body
+  const {
+    name,
+    desc,
+    healthyness,
+    steps,
+    dietTypes,
+    ingredientsList,
+    imageUrl,
+  } = req.body;
 
   try {
-    const addedRecipe = await addOneHandler(
+    const addedRecipe = await addOneHandler({
       name,
       desc,
       healthyness,
       steps,
-      dietTypes
-    );
+      dietTypes,
+      ingredientsList,
+      imageUrl,
+    });
 
     res
       .status(201)
@@ -75,7 +87,7 @@ recipesRouter.post("/add", async (req, res) => {
 });
 
 // * --------------------------------------
-// * Get all recipes from DB
+// ? Get all recipes from DB
 recipesRouter.get("/all", async (req, res) => {
   try {
     const allRecipes = await getOurRecipesHandler();
@@ -88,18 +100,33 @@ recipesRouter.get("/all", async (req, res) => {
 
 // * --------------------------------------
 // * Update one recipe by PK
+// * --------------------------------------
 recipesRouter.put("/update/:id", async (req, res) => {
-  const { name, desc, healthyness, steps } = req.body;
+  const { id } = req.params;
+  const {
+    name,
+    desc,
+    healthyness,
+    steps,
+    dietTypes,
+    ingredientsList,
+    imageUrl,
+  } = req.body;
 
   try {
-    const updatedRecipe = await updateOneHandler({
+    const updatedRecipe = await updateOneHandler(id, {
       name,
       desc,
       healthyness,
       steps,
+      dietTypes,
+      ingredientsList,
+      imageUrl,
     });
 
-    res.status(200).send("Recipe updated succesfully", updatedRecipe);
+    res
+      .status(201)
+      .json({ msg: `updated recipe with id ${id}`, updatedRecipe });
   } catch (error) {
     const { method, originalUrl } = req;
     errorResponseHelper(res, method, originalUrl, error.message);
@@ -108,13 +135,14 @@ recipesRouter.put("/update/:id", async (req, res) => {
 
 // * --------------------------------------
 // * remove recipe
+// * --------------------------------------
 recipesRouter.delete("/del/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
     await removeOneHandler(id);
 
-    res.status(200).send("Succesfully removed Recipe with UUID:", id);
+    res.status(200).json({ msg: "Succesfully removed Recipe with UUID:", id });
   } catch (error) {
     const { method, originalUrl } = req;
     errorResponseHelper(res, method, originalUrl, error.message);

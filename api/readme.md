@@ -1,3 +1,7 @@
+# TODO: Finish testing the recipes endpoint :D
+
+- ask help for the relationship (seems like it's linked correctly since if I cahnge diet for Diets, the model constrain stops me, but when I attemp to findAll({include:Diets}))
+
 # Routes
 
 ## /diets
