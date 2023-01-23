@@ -1,12 +1,12 @@
 const hardCoddedDiets = require("../hardCoddedDiets");
-const { Diet } = require("../db");
+const { Diet, Recipe } = require("../db");
 
 // ? Only gets executed if the result from Diet.findAll gave an empty arr, returns the created Diet object
 const initialLoadHandler = async () => {
   // this is the format sequelize expects
   const bulkToCreate = hardCoddedDiets.map((d) => ({ dietName: d }));
 
-  await Diet.bulkCreate(bulkToCreate).catch((error) => {
+  await Diet.bulkCreate(bulkToCreate, { include: Recipe }).catch((error) => {
     throw new Error(error.message);
   });
 
@@ -35,6 +35,7 @@ module.exports = {
     return res;
   },
 
-  // * adds one to DB and implicit return
-  addOneHandler: async (dietName) => await Diet.create({ dietName }),
+  // * adds one to DB
+  addOneHandler: async (dietName) =>
+    await Diet.create({ dietName }, { include: [Recipe] }),
 };

@@ -1,12 +1,11 @@
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
-const axios = require("axios");
-const { Diet } = require("./src/db");
 
 const PORT = process.env.PORT || 1313;
 
-// ! TOTALLY REMOVE OPTION ON DEPLOYMENT
-conn.sync({ force: true }).then(() => {
+// { alter: true }
+// { force: true }
+conn.sync({ alter: true }).then(() => {
   server.listen(PORT, () => {
     console.log(`-_-listening on localhost:${PORT}`);
   });

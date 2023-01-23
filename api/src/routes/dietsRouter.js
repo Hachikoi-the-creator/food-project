@@ -1,4 +1,3 @@
-const { Diet } = require("../db");
 const { Router } = require("express");
 const errorHandlerHelper = require("../utils/routerErrHandler");
 const {
@@ -12,7 +11,7 @@ const dietsRouter = Router();
 // * --------------------------------------
 // * GET ALL DIETS
 // * --------------------------------------
-dietsRouter.get("/diets/", async (req, res) => {
+dietsRouter.get("/diets", async (req, res) => {
   try {
     const allDiets = await getAllHandler();
 

@@ -52,7 +52,8 @@ recipesRouter.get("/id/:id", async (req, res) => {
 });
 
 // * --------------------------------------
-// ? ADD ONE RECIPE
+// * ADD ONE RECIPE
+// * --------------------------------------
 recipesRouter.post("/add", async (req, res) => {
   // good practice to explicitly get them from body
   const {
@@ -88,6 +89,7 @@ recipesRouter.post("/add", async (req, res) => {
 
 // * --------------------------------------
 // ? Get all recipes from DB
+// * --------------------------------------
 recipesRouter.get("/all", async (req, res) => {
   try {
     const allRecipes = await getOurRecipesHandler();
@@ -99,7 +101,7 @@ recipesRouter.get("/all", async (req, res) => {
 });
 
 // * --------------------------------------
-// * Update one recipe by PK
+// ? Update one recipe by PK
 // * --------------------------------------
 recipesRouter.put("/update/:id", async (req, res) => {
   const { id } = req.params;
@@ -134,7 +136,7 @@ recipesRouter.put("/update/:id", async (req, res) => {
 });
 
 // * --------------------------------------
-// * remove recipe
+// ? remove recipe
 // * --------------------------------------
 recipesRouter.delete("/del/:id", async (req, res) => {
   const { id } = req.params;
