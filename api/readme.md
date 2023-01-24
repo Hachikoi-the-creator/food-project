@@ -1,14 +1,15 @@
-# TODO: Finish testing the recipes endpoint :D
+# TODO:
 
-- ask help for the relationship (seems like it's linked correctly since if I cahnge diet for Diets, the model constrain stops me, but when I attemp to findAll({include:Diets}))
+- Test how update on non existent Recipe works if it does lol
 
 # Routes
 
 ## /diets
 
-- GET **diets/** : Get all diets from DB
-- GET **diets/:id** : get a single diet from BD by UUID
-- POST **diet/add?newDiet=<DietName>** : Add a diet by name to DB
+- GET **diets/all** : Get all diets from DB
+- GET **diets/id/:id** : get a single diet from BD by UUID
+- POST **diets/add?newDiet=<DietName>** : Add a diet by name to DB
+- DELETE **diets/del?dietId=<DietId>** : Delete Diet From DB
 
 ## /recipes
 

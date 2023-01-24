@@ -4,8 +4,7 @@ const recipesRouter = require("./recipesRouter");
 
 const mainRouter = Router();
 
-// not using "/diets" because we get a conflict with diets/add/
-mainRouter.use(dietsRouter);
+mainRouter.use("/diets", dietsRouter);
 mainRouter.use("/recipes", recipesRouter);
 
 module.exports = mainRouter;

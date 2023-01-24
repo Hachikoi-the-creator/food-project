@@ -128,13 +128,15 @@ module.exports = {
 
     furtherRecipeCheck(updatedRecipe);
 
-    // option silent responds with a '0' if the record was not found (doesn't throw error)
-    const res = await Recipe.update(updatedRecipe, {
-      where: { id },
-      silent: true,
-    });
-
-    if (!res) throw new Error("Not recipe found in DB, invalid UUID");
+    // if exist, just updates and later links, otherwise value overwritten then link diets
+    let result = await Recipe.findByPk(id);
+    if (existRecipe) {
+      result = await Recipe.update(updatedRecipe, {
+        where: { id },
+      });
+    } else {
+      result = await this.addOneHandler(updatedRecipe);
+    }
 
     // * Link to Diets table
     const allDiets = await Diet.findAll();
@@ -142,12 +144,11 @@ module.exports = {
       updatedRecipe.dietTypes.includes(dietObj.dietName)
     );
 
-    const gottenToLink = await Recipe.findByPk(id);
     matchedDiets.forEach((diet) => {
-      gottenToLink.addDiet(diet);
+      result.addDiet(diet);
     });
 
-    return res;
+    return result;
   },
 
   // * -------------------------------------

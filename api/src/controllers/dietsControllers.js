@@ -17,7 +17,9 @@ const initialLoadHandler = async () => {
 
 // easier way to export a bunch of functions
 module.exports = {
+  // * -------------------------------------
   // * Gets all registers from DB if it's empty add them all to DB
+  // * -------------------------------------
   getAllHandler: async () => {
     const res = await Diet.findAll();
 
@@ -28,14 +30,30 @@ module.exports = {
     return res;
   },
 
+  // * -------------------------------------
   // * Gets a single register from DB
+  // * -------------------------------------
   getOneHandler: async (id) => {
     const res = await Diet.findByPk(id);
 
     return res;
   },
 
+  // * -------------------------------------
   // * adds one to DB
+  // * -------------------------------------
   addOneHandler: async (dietName) =>
     await Diet.create({ dietName }, { include: [Recipe] }),
+
+  // * -------------------------------------
+  // * DELETES one from DB
+  // * -------------------------------------
+  removeOneHandler: async () => {
+    // if not found, returns null
+    const foundDiet = await Diet.findByPk(id);
+
+    if (!foundDiet) throw new Error("Recipe not found in DB");
+
+    await foundDiet.destroy();
+  },
 };

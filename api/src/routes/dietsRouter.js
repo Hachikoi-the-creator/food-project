@@ -7,11 +7,11 @@ const {
 } = require("../controllers/dietsControllers");
 
 const dietsRouter = Router();
-
 // * --------------------------------------
 // * GET ALL DIETS
 // * --------------------------------------
-dietsRouter.get("/diets", async (req, res) => {
+// - GET **diets/all** : Get all diets from DB
+dietsRouter.get("/all", async (req, res) => {
   try {
     const allDiets = await getAllHandler();
 
@@ -26,7 +26,8 @@ dietsRouter.get("/diets", async (req, res) => {
 // * --------------------------------------
 // * GET ONE DIET - params
 // * --------------------------------------
-dietsRouter.get("/diets/:id", async (req, res) => {
+// - GET **diets/id/:id** : get a single diet from BD by UUID
+dietsRouter.get("/id/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -43,13 +44,32 @@ dietsRouter.get("/diets/:id", async (req, res) => {
 // * --------------------------------------
 // * ADD ONE DIET - query
 // * --------------------------------------
-dietsRouter.post("/diet/add", async (req, res) => {
+// - POST **diets/add?newDiet=<DietName>** : Add a diet by name to DB
+dietsRouter.post("/add", async (req, res) => {
   const { newDiet } = req.query;
 
   try {
     const addedDiet = await addOneHandler(newDiet);
 
     res.status(201).send(addedDiet);
+  } catch (error) {
+    const { method, originalUrl } = req;
+
+    errorHandlerHelper(res, method, originalUrl, error.message);
+  }
+});
+
+// * --------------------------------------
+// * DELETE by id/pk - query
+// * --------------------------------------
+// - DELETE **diets/del?dietId=<DietId>** : Delete Diet From DB
+dietsRouter.post("/del/:dietId", async (req, res) => {
+  const { dietId } = req.query;
+
+  try {
+    const addedDiet = await removeOneHandler(dietId);
+
+    res.status(200).send(addedDiet);
   } catch (error) {
     const { method, originalUrl } = req;
 
