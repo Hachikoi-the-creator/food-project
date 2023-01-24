@@ -50,6 +50,7 @@ module.exports = {
   },
   // *--------------------------------
   getOneFormatedApiRes: (oneRecipe) => {
+    // * steps is more likely null... from API
     const {
       id,
       instructions,
@@ -90,7 +91,7 @@ function getFormatedIngredients(ingredients) {
 
   return {
     name: ingredients.name,
-    amount: ingredients.measures.metric.amount,
-    unit: ingredients.measures.metric.unitLong,
+    amount: ingredients.measures?.metric.amount,
+    unit: ingredients.measures?.metric.unitLong,
   };
 }

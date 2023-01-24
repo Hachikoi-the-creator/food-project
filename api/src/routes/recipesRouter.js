@@ -88,7 +88,7 @@ recipesRouter.post("/add", async (req, res) => {
 });
 
 // * --------------------------------------
-// ? Get all recipes from DB
+// * Get all recipes from DB
 // * --------------------------------------
 recipesRouter.get("/all", async (req, res) => {
   try {

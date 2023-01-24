@@ -19,6 +19,26 @@
 - PUT **recipes/update/:id** : Update recipe in DB (must have all fields)
 - DELETE **recipes/del/:id** : remove recipe from DB
 
+## Expected Recipe format
+
+```json
+{
+  "ingredientsList": [
+    {
+      "name": "some ingredient",
+      "amount": 69,
+      "unit": "grams"
+    }
+  ],
+  "name": "lame af nam e",
+  "desc": "kekwkokokokokkoko",
+  "healthyness": 14,
+  "steps": ["111111s1111111", "222222222222", "3333333dd33"],
+  "imageUrl": "htpp:yomaaamasofat.com",
+  "dietTypes": ["vegetarian"]
+}
+```
+
 ### Only valid endpoints
 
 - GET <https://api.spoonacular.com/recipes/complexSearch>

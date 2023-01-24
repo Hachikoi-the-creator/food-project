@@ -14,7 +14,7 @@ const { API_KEY } = process.env;
 
 module.exports = {
   // * --------------------------------------
-  // ! Get several matches by name - (takes like 5sec holy fuck)
+  // * Get several matches by name - (takes like 5sec holy fuck)
   // * --------------------------------------
   getByNameHandler: async (name, resNum = 13) => {
     if (!name)
@@ -52,16 +52,15 @@ module.exports = {
   },
 
   // * --------------------------------------
-  // ? Add one recipe to DB
+  // * Add one recipe to DB
   // * --------------------------------------
-  /**
-   * I love these docs
-   * https://sequelize.org/docs/v6/advanced-association-concepts/advanced-many-to-many/
-   */
   addOneHandler: async (recipeData) => {
+    /**
+     * I love these docs
+     * https://sequelize.org/docs/v6/advanced-association-concepts/advanced-many-to-many/
+     */
     // will throw error if something is wrong
     furtherRecipeCheck(recipeData);
-    // * Link to Diets table
 
     // if you send an attr not defined in model, it'll Throw error... :'c
     const { name, desc, healthyness, steps, imageUrl, ingredientsList } =
@@ -76,6 +75,7 @@ module.exports = {
       ingredientsList,
     });
 
+    // * Link to Diets table
     // need to get all diets
     const allDiets = await Diet.findAll();
     // then compare the names with the ones I get from the recipe
@@ -92,7 +92,7 @@ module.exports = {
   },
 
   // * --------------------------------------
-  // * Get unique recipe by ID - this endpoint doens't exist anymore tho xD
+  // * Get unique recipe by ID
   // * --------------------------------------
   getOneHandler: async (recipeId) => {
     // first API because it's more likely to happen this way (thus +performance)
@@ -100,22 +100,26 @@ module.exports = {
       const { data: oneRecipe } = await axios(
         `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=false&apiKey=${API_KEY}`
       );
-      // get only these from API RESPONSE
-      // * steps is more likely null...always
       const matchingFormat = getOneFormatedApiRes(oneRecipe);
+
+      return matchingFormat;
     }
 
     const ourRecipe = await Recipe.findByPk(recipeId, {
-      include: [Diet],
+      include: {
+        model: Diet,
+        // attributes: { include: ["dietName", "id", "createdInDb"] },
+      },
     });
 
     return ourRecipe;
   },
-  // * EXTRA POINTS I DID UwU
-  // * --------------------------------------
-  // ? Only fetch the recipes we have stored in our DB
+
+  // * ------------------ EXTRA POINTS --------------------
+  // * Only fetch the recipes we have stored in our DB
   // * --------------------------------------
   getOurRecipesHandler: async () => await Recipe.findAll({ include: Diet }),
+
   // * --------------------------------------
   // ? Update one recipe (only if it's within our DB)
   // * --------------------------------------
@@ -132,11 +136,23 @@ module.exports = {
 
     if (!res) throw new Error("Not recipe found in DB, invalid UUID");
 
+    // * Link to Diets table
+    const allDiets = await Diet.findAll();
+    const matchedDiets = allDiets.filter((dietObj) =>
+      updatedRecipe.dietTypes.includes(dietObj.dietName)
+    );
+
+    const gottenToLink = await Recipe.findByPk(id);
+    matchedDiets.forEach((diet) => {
+      gottenToLink.addDiet(diet);
+    });
+
     return res;
   },
 
-  // * --------------------------------------
+  // * -------------------------------------
   // * remove recipe from our DB
+  // * -------------------------------------
   removeOneHandler: async (id) => {
     validateUUID(id);
 
