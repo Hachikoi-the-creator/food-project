@@ -43,7 +43,7 @@ module.exports = {
   // * adds one to DB
   // * -------------------------------------
   addOneHandler: async (dietName) =>
-    await Diet.create({ dietName }, { include: [Recipe] }),
+    await Diet.create({ dietName }, { include: Recipe }),
 
   // * -------------------------------------
   // * DELETES one from DB
