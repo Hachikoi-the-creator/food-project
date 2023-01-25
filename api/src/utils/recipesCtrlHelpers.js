@@ -1,4 +1,55 @@
+function formatOneDBRecipe(recipe) {
+  const diets = recipe.Diets.map((diet) => ({
+    id: diet.id,
+    name: diet.dietName,
+  }));
+  // explicit because I dont want Diet, but diet (can't change on destructuring)
+  return {
+    id: recipe.id,
+    name: recipe.name,
+    desc: recipe.desc,
+    healthyness: recipe.healthyness,
+    steps: recipe.steps,
+    imageUrl: recipe.imageUrl,
+    createdInDb: recipe.createdInDb,
+    ingredientsList: recipe.ingredientsList,
+    diets,
+  };
+}
+
+function formatOneAPIRecipe(oneRecipe) {
+  const {
+    id,
+    analyzedInstructions,
+    extendedIngredients,
+    title: name,
+    image: imageUrl,
+    summary: desc,
+    healthScore: healthyness,
+    diets: dietTypes,
+  } = oneRecipe;
+
+  const ingredientsList = formatedIngredientsAPI(extendedIngredients);
+  // .steps could be undefined in some API cases
+  const steps = analyzedInstructions[0]?.steps.map((e) => e.step) || [];
+
+  const matchingFormat = {
+    id,
+    name,
+    imageUrl,
+    desc,
+    healthyness,
+    dietTypes,
+    steps,
+    ingredientsList,
+  };
+
+  return matchingFormat;
+}
+
 module.exports = {
+  formatOneAPIRecipe,
+  formatOneDBRecipe,
   getOnlyBasicsApi: (apiResponse) => {
     const formated = apiResponse.map((recipe) => {
       const {
@@ -6,105 +57,44 @@ module.exports = {
         healthScore: healthyness,
         image: imageUrl,
         diets: dietTypes,
+        id,
       } = recipe;
-      return { name, healthyness, imageUrl, dietTypes };
+      return { id, name, healthyness, imageUrl, dietTypes };
     });
 
     return formated;
   },
-
+  // !--------------------------------------------------------------
   getOnlyBasicsFromDB: (dbResponse) => {
     const formated = dbResponse.map((recipe) => {
-      const { name, healthyness, imageUrl } = recipe;
+      const { name, healthyness, imageUrl, id } = recipe;
       const dietTypes = recipe.Diets.map((diet) => diet.dietName);
 
-      return { name, healthyness, imageUrl, dietTypes };
+      return { id, name, healthyness, imageUrl, dietTypes };
     });
 
     return formated;
   },
+  // !--------------------------------------------------------------
+  formateAllAPIRecipes: (recipesArr) => {
+    const formatedRecipes = recipesArr.map((recipe) =>
+      formatOneAPIRecipe(recipe)
+    );
 
-  getFormatedApiResponse: (apiResponse) => {
-    /*//* How I make transformed the thing that came to be equal to my BD model :D
-     *  diets:[empty], cames alone with our DB response
-     *
-     *  name:title,
-     *  desc:summary,
-     *  healthyness:healthScore,
-     *  imageUrl:image,
-     *  steps:analyzedInstructions[{may only have one obj}.steps[{}.step] (for steps),
-     * */
-    const res = apiResponse.map((recipe) => {
-      // diets could be empty array
-      const {
-        title: name,
-        summary: desc,
-        healthScore: healthyness,
-        image: imageUrl,
-        diets,
-      } = recipe;
-
-      // * STEPS * //
-      // only one obj here... (tested 20+ times) may be empty...
-      const steps = recipe.analyzedInstructions[0]?.steps.map((e) => e.step);
-
-      // * INGREDIENTS_LIST * //
-      const ingredientsList = getFormatedIngredients(
-        recipe.extendedIngredients
-      );
-      //  recipe.extendedIngredients?.map((ingredient) => ({
-      //   name: ingredient.originalName,
-      //   amount: ingredient.metric.amount,
-      //   unit: ingredient.metric.unitLong,
-      // }));
-
-      return {
-        name,
-        desc,
-        healthyness,
-        imageUrl,
-        steps,
-        ingredientsList,
-        diets,
-        // makes FE work easier :P
-        createdInDb: false,
-      };
-    });
-
-    return res;
+    return formatedRecipes;
   },
-  // *--------------------------------
-  getOneFormatedApiRes: (oneRecipe) => {
-    // * steps is more likely null... from API
-    const {
-      id,
-      instructions,
-      extendedIngredients,
-      title: name,
-      image: imageUrl,
-      summary: desc,
-      healthScore: healthyness,
-      diets: dietTypes,
-    } = oneRecipe;
+  // !--------------------------------------------------------------
+  formatAllDBRecipes: (recipesArr) => {
+    const formatedRecipes = recipesArr.map((recipe) =>
+      formatOneDBRecipe(recipe)
+    );
 
-    const ingredientsList = getFormatedIngredients(extendedIngredients);
-
-    const matchingFormat = {
-      id,
-      name,
-      imageUrl,
-      desc,
-      healthyness,
-      dietTypes,
-      steps: instructions || [],
-      ingredientsList,
-    };
-
-    return matchingFormat;
+    return formatedRecipes;
   },
 };
 
-function getFormatedIngredients(ingredients) {
+// * Helper function :D
+function formatedIngredientsAPI(ingredients) {
   /**
    * ingredientsList:{
    *  name:ingredients[{}.originalName],
@@ -112,11 +102,13 @@ function getFormatedIngredients(ingredients) {
    *  unit:ingredients[{}.measures.metric.unitLong]
    * }
    * */
-  if (!ingredients) return [];
+  if (!ingredients.length) return [];
+  const formatedIngredients = ingredients.map((e) => ({
+    id: e.id,
+    name: e.originalName,
+    amount: e.measures.metric.amount,
+    unit: e.measures.metric.unitLong,
+  }));
 
-  return {
-    name: ingredients.name,
-    amount: ingredients.measures?.metric.amount,
-    unit: ingredients.measures?.metric.unitLong,
-  };
+  return formatedIngredients;
 }

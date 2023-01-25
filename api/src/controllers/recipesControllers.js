@@ -6,9 +6,11 @@ const {
   validateUUID,
 } = require("../utils/controllersValidators");
 const {
-  getOneFormatedApiRes,
   getOnlyBasicsApi,
   getOnlyBasicsFromDB,
+  formatOneDBRecipe,
+  formatOneAPIRecipe,
+  formatAllDBRecipes,
 } = require("../utils/recipesCtrlHelpers");
 
 const { API_KEY } = process.env;
@@ -89,28 +91,30 @@ module.exports = {
   getOneHandler: async (recipeId) => {
     // first API because it's more likely to happen this way (thus +performance)
     if (!isNaN(+recipeId)) {
-      const { data: oneRecipe } = await axios(
+      const { data: apiRecipe } = await axios(
         `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=false&apiKey=${API_KEY}`
       );
-      const matchingFormat = getOneFormatedApiRes(oneRecipe);
+      const matchingFormat = formatOneAPIRecipe(apiRecipe);
 
       return matchingFormat;
     }
 
-    const ourRecipe = await Recipe.findByPk(recipeId, {
-      include: {
-        model: Diet,
-        // attributes: { include: ["dietName", "id", "createdInDb"] },
-      },
-    });
+    const ourRecipe = await Recipe.findByPk(recipeId, { include: Diet });
+    const formatedRecipe = formatOneDBRecipe(ourRecipe);
 
-    return ourRecipe;
+    return formatedRecipe;
   },
 
   // * ------------------ EXTRA POINTS --------------------
   // * Only fetch the recipes we have stored in our DB
   // * --------------------------------------
-  getOurRecipesHandler: async () => await Recipe.findAll({ include: Diet }),
+
+  getOurRecipesHandler: async () => {
+    const recipe = await Recipe.findAll({ include: Diet });
+    const formatedRecipes = formatAllDBRecipes(recipe);
+
+    return formatedRecipes;
+  },
 
   // * --------------------------------------
   // ? Update one recipe (only if it's within our DB)
