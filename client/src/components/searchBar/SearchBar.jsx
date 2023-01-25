@@ -1,16 +1,17 @@
-import { useRef } from "react";
-import { Input } from "./styledSearchBar";
+import { useRef, useState } from "react";
+// import { Input } from "./styledSearchBar";
+import { useSelector, useDispatch } from "react-redux";
+import { filterRecipesByName } from "../../redux/actions";
 
 export default function SearchBar() {
+  const dispatcher = useDispatch();
   const inputRef = useRef();
-  const [foodGotten, setFoodGotten] = useState([]);
-  // Array.prototype.length
+  // const [foodGotten, setFoodGotten] = useState([]);
+  // const apiRecipes = useSelector((data) => data.apiRecipes);
 
   const searchHandler = () => {
-    const value = inputRef.current.value;
-    // do request to my API
-    const res = ["Some recipe kek"];
-    setFoodGotten(res);
+    const recipeName = inputRef.current.value;
+    useDispatch(filterRecipesByName(recipeName));
   };
 
   return (
@@ -23,11 +24,6 @@ export default function SearchBar() {
         ref={inputRef}
       />
       <button onClick={searchHandler}>Search</button>
-      {!foodGotten.length && (
-        <p>
-          Was not able find what you were loking for D: try a shorter search~
-        </p>
-      )}
     </div>
   );
 }

@@ -1,10 +1,14 @@
+# todo:
+
+- use useEffect and change on input value to ilter & dispatch an action to get stuff by name
+
 # Overall functionality
 
 - Buscar recetas
 - Filtrarlos / Ordenarlos
 - Crear nuevas recetas propias
 
-**IMPORTANTE**: Para las funcionalidades de filtrado y ordenamiento NO pueden utilizar los endpoints de la API externa que ya devuelven los resultados filtrados u ordenados sino que deben realizarlo ustedes mismos. En particular alguno de los ordenamientos o filtrados debe si o si realizarse desde el frontend.
+**IMPORTANT**:Filter stuff in FE (not use API endpoints, would have to do it by hand with DB data either way)
 
 ### Only valid endpoints
 
@@ -14,13 +18,6 @@
 - GET <https://api.spoonacular.com/recipes/{id}/information> // This shit doesn't exist tho lmao
 
 ## Frontend
-
-Se debe desarrollar una aplicación de React/Redux que contenga las siguientes pantallas/rutas.
-
-**Pagina inicial**: deben armar una landing page con
-
-- [ ] Alguna imagen de fondo representativa al proyecto
-- [ ] Botón para ingresar al home (`Ruta principal`)
 
 **Ruta principal**: debe contener
 

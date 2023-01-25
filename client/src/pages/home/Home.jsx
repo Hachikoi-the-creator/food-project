@@ -1,8 +1,13 @@
-import axios from "axios";
+import Filters from "../../components/filters/Filters";
+import RecipesContainer from "../../components/recipesContainer/RecipesContainer";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 export default function Home() {
-  const callHandler = async () => {
-    console.log(res);
-  };
-  return <div>Home</div>;
+  return (
+    <div>
+      <h1>Home</h1>
+      <SearchBar />
+      <RecipesContainer />
+    </div>
+  );
 }

@@ -68,3 +68,19 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+.pages-section ul {
+  list-style: none;
+  display: flex;
+}
+
+.pages-section li {
+  margin: 0.3rem;
+}
+
+.pages-section button {
+  color: white;
+}
+
+.pages-section .curr-page {
+  border: white 2px solid;
+}
