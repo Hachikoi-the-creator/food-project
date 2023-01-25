@@ -6,8 +6,9 @@ const {
   validateUUID,
 } = require("../utils/controllersValidators");
 const {
-  getFormatedApiResponse,
   getOneFormatedApiRes,
+  getOnlyBasicsApi,
+  getOnlyBasicsFromDB,
 } = require("../utils/recipesCtrlHelpers");
 
 const { API_KEY } = process.env;
@@ -16,6 +17,7 @@ module.exports = {
   // * --------------------------------------
   // * Get several matches by name - (takes like 5sec holy fuck)
   // * --------------------------------------
+  // ? Here I only want imageUrl, name, diets...
   getByNameHandler: async (name, resNum = 13) => {
     if (!name)
       throw new Error("Invalid query type :", (typeof name).toString());
@@ -24,31 +26,21 @@ module.exports = {
     // const { data: rndRecipes } = await axios(
     //   `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${name}&number=${resNum}`
     // );
-    // * I only use these to get matching title & id, because it doesn't give me steps stuff
     const { data: rndRecipes } = await axios(
       `https://api.spoonacular.com/recipes/complexSearch?number=${resNum}&addRecipeInformation=true&apiKey=${API_KEY}`
     );
 
-    const arrOfPromises = rndRecipes.results.filter((e) => {
-      const compareRegex = new RegExp(name, "ig");
-      if (e.title.match(compareRegex)) {
-        return axios(
-          `https://api.spoonacular.com/recipes/${e.id}/information?includeNutrition=false&apiKey=${API_KEY}`
-        );
-      }
-    });
-
-    const foundFromApi = await axios.all(arrOfPromises);
-
     const foundInDb = await Recipe.findAll({
       where: { name: { [Op.substring]: name } },
+      include: {
+        model: Diet,
+      },
     });
 
-    if (!foundFromApi.length) return foundInDb;
+    const formatedAPI = getOnlyBasicsApi(rndRecipes.results);
+    const formatedDB = getOnlyBasicsFromDB(foundInDb);
 
-    const formatedApiResponse = getFormatedApiResponse(foundFromApi);
-
-    return [...formatedApiResponse, ...foundInDb];
+    return [...formatedDB, ...formatedAPI];
   },
 
   // * --------------------------------------

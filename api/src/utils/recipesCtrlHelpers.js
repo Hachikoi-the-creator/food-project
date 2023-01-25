@@ -1,4 +1,29 @@
 module.exports = {
+  getOnlyBasicsApi: (apiResponse) => {
+    const formated = apiResponse.map((recipe) => {
+      const {
+        title: name,
+        healthScore: healthyness,
+        image: imageUrl,
+        diets: dietTypes,
+      } = recipe;
+      return { name, healthyness, imageUrl, dietTypes };
+    });
+
+    return formated;
+  },
+
+  getOnlyBasicsFromDB: (dbResponse) => {
+    const formated = dbResponse.map((recipe) => {
+      const { name, healthyness, imageUrl } = recipe;
+      const dietTypes = recipe.Diets.map((diet) => diet.dietName);
+
+      return { name, healthyness, imageUrl, dietTypes };
+    });
+
+    return formated;
+  },
+
   getFormatedApiResponse: (apiResponse) => {
     /*//* How I make transformed the thing that came to be equal to my BD model :D
      *  diets:[empty], cames alone with our DB response
