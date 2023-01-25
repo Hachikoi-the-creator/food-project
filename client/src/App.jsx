@@ -1,12 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import {
-  Home,
-  Login,
-  CreateRecipe,
-  RecipeDetails,
-  Register,
-  Landing,
-} from "./pages";
+import Home from "./pages/Home";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import CreateRecipe from "./pages/CreateRecipe";
+import RecipeDetails from "./pages/RecipeDetails";
+import Register from "./pages/Register";
 import Custom404 from "./pages/Custom404";
 
 export default function App() {

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 // import { Input } from "./styledSearchBar";
 import { useSelector, useDispatch } from "react-redux";
-import { filterRecipesByName } from "../../redux/actions";
+import { filterRecipesByName } from "../redux/actions";
 
 export default function SearchBar() {
   const dispatcher = useDispatch();

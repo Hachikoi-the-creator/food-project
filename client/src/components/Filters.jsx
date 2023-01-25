@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { getAllDiets, filterByAlpha } from "../../redux/actions";
+import { getAllDiets, filterByAlpha } from "../redux/actions";
 
 class Filters extends Component {
   componentDidMount() {

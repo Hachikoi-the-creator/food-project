@@ -1,8 +1,8 @@
-import RecipeCard from "../recipeCard/RecipeCard";
+import RecipeCard from "./RecipeCard";
 import { useSelector } from "react-redux";
 import React, { useState } from "react";
-import Paged from "../paged/Paged";
-import Filters from "../filters/Filters";
+import Paged from "./Paged";
+import Filters from "./Filters";
 
 export default function RecipesContainer() {
   const filteredRecipes = useSelector((state) => state.filteredRecipes);
