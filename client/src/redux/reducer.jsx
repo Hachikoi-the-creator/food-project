@@ -7,6 +7,23 @@ import {
   ORDER_RECIPES_BY_ALPHA,
 } from "./actions";
 
+const normalAlpha = (a, b) => {
+  if (a.name < b.name) {
+    return -1;
+  } else if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};
+
+const reversedAlpha = (a, b) => {
+  if (a.name > b.name) {
+    return -1;
+  } else if (a.name < b.name) {
+    return 1;
+  }
+  return 0;
+};
 // helpers imports
 const initialState = {
   loading: false,
@@ -55,12 +72,12 @@ export default (state = initialState, action) => {
     case ORDER_RECIPES_BY_ALPHA:
       // if true, alpha ; else , inversed alpha
       const alphaOrderedDiets = action.payload
-        ? state.apiRecipes.sort((prev, curr) => prev - curr)
-        : state.apiRecipes.sort((prev, curr) => curr - prev);
+        ? state.filteredRecipes.sort((a, b) => normalAlpha(a, b))
+        : state.filteredRecipes.sort((a, b) => reversedAlpha(a, b));
 
       return {
         ...state,
-        filteredRecipes: dietFiltered,
+        filteredRecipes: [...alphaOrderedDiets],
       };
 
     // ! *******************************************************

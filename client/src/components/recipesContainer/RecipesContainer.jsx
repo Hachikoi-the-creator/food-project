@@ -13,17 +13,16 @@ export default function RecipesContainer() {
   );
 
   return (
-    <React.Fragment>
+    <div className="recipes-container">
       <Filters />
       <Paged {...{ page }} total={filteredRecipes.length} {...{ setPage }} />
-      <div className="recipes-container">
-        {/* <h1>len {filteredRecipes.length}</h1> */}
+      <div className="recipes-inner-wrapper">
         <h2>Check out these recipes :D</h2>
         {pagesRecipes.slice(2).map((data) => (
           <RecipeCard key={data.name} {...{ data }} />
         ))}
       </div>
       <Paged {...{ page }} total={filteredRecipes.length} {...{ setPage }} />
-    </React.Fragment>
+    </div>
   );
 }

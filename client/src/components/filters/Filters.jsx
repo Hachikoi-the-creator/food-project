@@ -12,13 +12,12 @@ class Filters extends Component {
   }
 
   handleDietAlpha(isAscendingOrder) {
-    // this.props.filterByAlpha(isAscendingOrder)
-    console.log(isAscendingOrder);
+    this.props.filterByAlpha(isAscendingOrder);
   }
 
   render() {
     const { allDiets } = this.props;
-    console.log(allDiets);
+    // console.log(allDiets);
 
     return (
       <div>
@@ -26,8 +25,8 @@ class Filters extends Component {
         <div className="diet-filter">
           <label>something</label>
           <select onChange={this.handleTypeChange}>
-            {allDiets?.map((diet) => (
-              <option key={diet} value={diet.dietName}>
+            {allDiets.map((diet) => (
+              <option key={diet.id} value={diet.dietName}>
                 {diet.dietName}
               </option>
             ))}
