@@ -26,7 +26,7 @@ recipesRouter.get("/", async (req, res) => {
       : "Couldn't find anything D:";
 
     // 204 would be the correct response, but would make FE work harder
-    res.status(200).json({ resultMsg, recipes });
+    res.status(200).send(recipes);
   } catch (error) {
     const { method, originalUrl } = req;
 
@@ -43,7 +43,7 @@ recipesRouter.get("/id/:id", async (req, res) => {
   try {
     const recipe = await getOneHandler(id);
 
-    res.status(200).json({ result: "Resource Found :D", recipe });
+    res.status(200).send(recipe);
   } catch (error) {
     const { method, originalUrl } = req;
 
