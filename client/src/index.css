@@ -62,22 +62,6 @@ img {
     background-color: #f9f9f9;
   }
 } */
-.pages-section ul {
-  list-style: none;
-  display: flex;
-}
-
-.pages-section li {
-  margin: 0.3rem;
-}
-
-.pages-section button {
-  color: white;
-}
-
-.pages-section .curr-page {
-  border: white 2px solid;
-}
 
 .footer {
   background-color: rgb(78, 0, 78);
@@ -87,4 +71,12 @@ img {
 .footer a {
   color: white;
   text-decoration: underline;
+}
+
+.name-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.3rem;
 }

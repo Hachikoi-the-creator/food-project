@@ -6,6 +6,9 @@ export default function Navbar() {
     <NavbarStyled>
       <ul>
         <li>
+          <Link to="/">Landing</Link>
+        </li>
+        <li>
           <Link to="/home">Home</Link>
         </li>
         <li>

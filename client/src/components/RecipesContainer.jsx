@@ -18,7 +18,7 @@ export default function RecipesContainer() {
     <MainContainer className="recipes-container">
       <Filters />
       <Paged {...{ page }} total={filteredRecipes.length} {...{ setPage }} />
-      <h2>Check out these recipes :D</h2>
+      <h2 className="main-title">Check out these recipes :D</h2>
       <FlexWrapper className="recipes-inner-wrapper">
         {pagesRecipes.map((data) => (
           <RecipeCard key={data.name} {...{ data }} />

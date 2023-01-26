@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { apiRecipesFetch } from "../redux/actions";
+import { apiRecipesFetch, getAllDiets } from "../redux/actions";
 
 export default function Landing() {
   const dispatcher = useDispatch();
 
   useEffect(() => {
     dispatcher(apiRecipesFetch());
+    dispatcher(getAllDiets());
   }, []);
 
   return (

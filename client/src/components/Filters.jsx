@@ -1,55 +1,46 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { getAllDiets, filterByAlpha } from "../redux/actions";
+import { filterByAlpha, filterRecipesByName } from "../redux/actions";
+import DietTypesSelector from "./DietTypesSelector";
+import { GenericFlexContainer } from "./styles/FilterStuff";
 
 class Filters extends Component {
-  componentDidMount() {
-    this.props.getAllDiets();
-  }
-
-  handleTypeChange(e) {
-    const dietType = e.target.value;
-  }
-
   handleDietAlpha(isAscendingOrder) {
     this.props.filterByAlpha(isAscendingOrder);
   }
 
-  render() {
-    const { allDiets } = this.props;
-    // console.log(allDiets);
+  handleSearchByName(name) {
+    if (name.length) this.props.filterRecipesByName(name);
+  }
 
+  render() {
     return (
-      <div>
-        <div className="diet-filter">
-          <label>something</label>
-          <select onChange={this.handleTypeChange}>
-            {allDiets.map((diet) => (
-              <option key={diet.id} value={diet.dietName}>
-                {diet.dietName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="aplha-filter">
+      <div className="filter-section">
+        <GenericFlexContainer className="aplha-filter">
           <p>by Alpabatich order</p>
           <button onClick={() => this.handleDietAlpha(true)}>Ascending</button>
           <button onClick={() => this.handleDietAlpha(false)}>
             Descending
           </button>
-        </div>
+        </GenericFlexContainer>
+
+        <DietTypesSelector
+          label={"Filter by diets"}
+          handler={this.handleSearchByName}
+        />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  allDiets: state.allDiets,
-});
+const mapStateToProps = (state) => ({});
+//   {
+//   allDiets: state.allDiets,
+// }
 
 const mapDispatchToProps = {
-  getAllDiets,
   filterByAlpha,
+  filterRecipesByName,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);

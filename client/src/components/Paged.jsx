@@ -1,12 +1,13 @@
 import React from "react";
+import { GenericFlexContainer, ButtonsList } from "./styles/FilterStuff";
 
 export default function Paged({ total, page, setPage }) {
   const totalPages = Math.ceil(total / 10);
 
   // offset of +1 to start on page 1 end on totalPages+1
   return (
-    <div className="pages-section">
-      <ul>
+    <GenericFlexContainer className="pages-section">
+      <ButtonsList className="pages-btns">
         {/* START */}
         {page >= 4 && (
           <li>
@@ -59,7 +60,7 @@ export default function Paged({ total, page, setPage }) {
             <button onClick={() => setPage(totalPages - 1)}>{">>"}</button>
           </li>
         )}
-      </ul>
-    </div>
+      </ButtonsList>
+    </GenericFlexContainer>
   );
 }

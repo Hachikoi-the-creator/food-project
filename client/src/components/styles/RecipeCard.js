@@ -1,8 +1,8 @@
 import styled from "styled-components";
+import { BoxShadow } from "./mixins";
 
 export const Card = styled.div`
   .inner-wrapper {
-    padding: 0.5rem;
     border-radius: 1rem;
     background-image: ${(props) => `url(${props.imgSrc})`};
     background-blend-mode: multiply;
@@ -25,7 +25,6 @@ export const Card = styled.div`
     }
 
     .diets-container {
-      margin-top: 1.3ch;
       display: flex;
       gap: 1.2ch;
       flex-wrap: wrap;
@@ -34,6 +33,10 @@ export const Card = styled.div`
     }
 
     &:hover {
+      > * {
+        padding: 0.7rem;
+      }
+      ${BoxShadow}
       background-color: #242424;
 
       .title,

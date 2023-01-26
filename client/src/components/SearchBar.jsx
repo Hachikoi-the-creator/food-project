@@ -1,20 +1,22 @@
-import { useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { filterRecipesByName } from "../redux/actions";
 
 export default function SearchBar() {
   const dispatcher = useDispatch();
   const inputRef = useRef();
-  // const [foodGotten, setFoodGotten] = useState([]);
-  // const apiRecipes = useSelector((data) => data.apiRecipes);
 
   const searchHandler = () => {
     const recipeName = inputRef.current.value;
-    useDispatch(filterRecipesByName(recipeName));
+    if (recipeName.length) dispatcher(filterRecipesByName(recipeName));
+    else
+      console.log(
+        "Input is empty, distpatch something to make it equal to base state"
+      );
   };
 
   return (
-    <div>
+    <div className="name-search">
       <label htmlFor="food-name">Search For Food</label>
       <input
         type="text"

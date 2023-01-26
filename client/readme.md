@@ -4,6 +4,10 @@
 - use DOMSanitier to use innerHtml safely in **components/Recipe.jsx**
 -
 
+# Resources
+
+- [Regex menu](<https://www3.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html#:~:text=Special%20Regex%20Characters:%20These%20characters,with%20a%20backslash%20(%20%5C%20).>)
+
 # Overall functionality
 
 - Buscar recetas

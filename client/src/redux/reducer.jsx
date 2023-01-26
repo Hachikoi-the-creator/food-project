@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
     case FILTER_RECIPES_BY_NAME:
       return {
         ...state,
-        filteredRecipes: action.payload,
+        filteredRecipes: [...action.payload],
       };
     // ! *******************************************************
     // case FILTER_RECIPES_BY_DIET_TYPE:

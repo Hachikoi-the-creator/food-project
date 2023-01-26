@@ -58,7 +58,7 @@ export function getAllDiets() {
  * @returns {ReduxAction}
  */
 export function filterRecipesByName(name) {
-  return async () => {
+  return async (dispatch) => {
     // dispatch(updateLoading());
 
     const { data } = await axios(`${baseUrl}/recipes?name=${name}`);
