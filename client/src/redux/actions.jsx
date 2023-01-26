@@ -8,6 +8,7 @@ const baseUrl = "http://localhost:1313";
 export const UPDATE_LOADING = "UPDATE_LOADING";
 export const GET_100_RECIPES = "GET_100_RECIPES";
 export const GET_ALL_DIETS = "GET_ALL_DIETS";
+
 export const FILTER_RECIPES_BY_NAME = "FILTER_RECIPES_BY_NAME";
 export const FILTER_RECIPES_BY_DIET_TYPE = "FILTER_RECIPES_BY_DIET_TYPE";
 export const ORDER_RECIPES_BY_ALPHA = "ORDER_RECIPES_BY_ALPHA";
@@ -22,20 +23,6 @@ export function updateLoading() {
 }
 
 // * -------------------------------
-// * GET_ALL_DIETS
-// * -------------------------------
-export function getAllDiets() {
-  return async (dispatch) => {
-    // dispatch(updateLoading());
-
-    const { data: allDiets } = await axios(`${baseUrl}/diets/all`);
-
-    dispatch({ type: GET_ALL_DIETS, payload: allDiets });
-    // dispatch(updateLoading());
-  };
-}
-
-// * -------------------------------
 // * GET_100_RECIPES
 // * -------------------------------
 export function apiRecipesFetch() {
@@ -45,6 +32,20 @@ export function apiRecipesFetch() {
     const { data } = await axios(`${baseUrl}/recipes?name=c&amount=113`);
 
     dispatch({ type: GET_100_RECIPES, payload: data });
+    // dispatch(updateLoading());
+  };
+}
+
+// * -------------------------------
+// * GET_ALL_DIETS
+// * -------------------------------
+export function getAllDiets() {
+  return async (dispatch) => {
+    // dispatch(updateLoading());
+
+    const { data: allDiets } = await axios(`${baseUrl}/diets/all`);
+
+    dispatch({ type: GET_ALL_DIETS, payload: allDiets });
     // dispatch(updateLoading());
   };
 }

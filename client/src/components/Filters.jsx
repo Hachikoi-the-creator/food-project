@@ -21,7 +21,6 @@ class Filters extends Component {
 
     return (
       <div>
-        <h1>{allDiets.length}</h1>
         <div className="diet-filter">
           <label>something</label>
           <select onChange={this.handleTypeChange}>

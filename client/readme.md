@@ -1,6 +1,8 @@
 # todo:
 
-- use useEffect and change on input value to ilter & dispatch an action to get stuff by name
+- use useEffect and change on input value to ilter & dispatch an action to get stuff by name in **components/SearchBar.jsx**
+- use DOMSanitier to use innerHtml safely in **components/Recipe.jsx**
+-
 
 # Overall functionality
 

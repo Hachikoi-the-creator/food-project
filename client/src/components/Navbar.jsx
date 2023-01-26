@@ -1,26 +1,20 @@
 import { Link } from "react-router-dom";
-import { Nav } from "./Styles/styledNavbar";
+import { NavbarStyled } from "./styles/LayoutStuff";
 
 export default function Navbar() {
   return (
-    <Nav>
+    <NavbarStyled>
       <ul>
         <li>
-          <Link to="/">HOME</Link>
+          <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link to="/login">LOGIN</Link>
+          <Link to="/login">Landing</Link>
         </li>
         <li>
-          <Link to="/register">REGISTER</Link>
-        </li>
-        <li>
-          <Link to="/create">CREATE</Link>
-        </li>
-        <li>
-          <Link to="/details/99">DETAILS</Link>
+          <Link to="/create">Create</Link>
         </li>
       </ul>
-    </Nav>
+    </NavbarStyled>
   );
 }

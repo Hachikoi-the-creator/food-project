@@ -1,21 +1,23 @@
 import { Link } from "react-router-dom";
+import { Card } from "./styles/RecipeCard";
 
 export default function RecipeCard({ data }) {
   const { createdInDb, name, imageUrl, dietTypes, healthyness, id } = data;
 
   if (!createdInDb)
     return (
-      <div className="diet-card">
-        <Link to={`details/${id}`}>
-          <img src={imageUrl} alt={`a really tasty ${name}`} />
-          <h3>{name}</h3>
-        </Link>
-        <div className="diets-container">
-          {dietTypes?.length
-            ? dietTypes.map((diet) => <span key={diet}>{diet}</span>)
-            : "no found diet types"}
-        </div>
-      </div>
+      <Link to={`/details/${name.split` `.pop()}`} state={{ id }}>
+        <Card className="diet-card" imgSrc={imageUrl}>
+          <div className="inner-wrapper">
+            <p className="title">{name}</p>
+            <div className="diets-container">
+              {dietTypes?.length
+                ? dietTypes.map((diet) => <span key={diet}>{diet}</span>)
+                : "no found diet types"}
+            </div>
+          </div>
+        </Card>
+      </Link>
     );
   // ---------------------
   else if (createdInDb)

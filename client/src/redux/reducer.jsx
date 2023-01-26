@@ -79,7 +79,6 @@ export default (state = initialState, action) => {
         ...state,
         filteredRecipes: [...alphaOrderedDiets],
       };
-
     // ! *******************************************************
     default:
       return { ...state };
