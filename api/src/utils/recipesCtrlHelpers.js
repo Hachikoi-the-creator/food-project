@@ -50,6 +50,7 @@ function formatOneAPIRecipe(oneRecipe) {
 module.exports = {
   formatOneAPIRecipe,
   formatOneDBRecipe,
+
   getOnlyBasicsApi: (apiResponse) => {
     const formated = apiResponse.map((recipe) => {
       const {
@@ -67,13 +68,26 @@ module.exports = {
   // !--------------------------------------------------------------
   getOnlyBasicsFromDB: (dbResponse) => {
     const formated = dbResponse.map((recipe) => {
-      const { name, healthyness, imageUrl, id } = recipe;
+      const { name, imageUrl, id } = recipe;
       const dietTypes = recipe.Diets.map((diet) => diet.dietName);
 
-      return { id, name, healthyness, imageUrl, dietTypes };
+      return { id, name, imageUrl, dietTypes };
     });
 
     return formated;
+  },
+
+  // !--------------------------------------------------------------
+  getOnlyBasicsWeirdgeDB: (recipeArr) => {
+    const recipes = recipeArr.flatMap((e) => e.Recipes);
+    const desiredFormat = recipes.map((e) => ({
+      id: e.id,
+      name: e.name,
+      imageUrl: e.imageUrl,
+      dietTypes: e.Diets.map((e) => e.dietName),
+    }));
+
+    return desiredFormat;
   },
   // !--------------------------------------------------------------
   formateAllAPIRecipes: (recipesArr) => {

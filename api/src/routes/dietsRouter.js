@@ -4,6 +4,7 @@ const {
   getAllHandler,
   getOneHandler,
   addOneHandler,
+  getAllRelated,
 } = require("../controllers/dietsControllers");
 
 const dietsRouter = Router();
@@ -16,6 +17,23 @@ dietsRouter.get("/all", async (req, res) => {
     const allDiets = await getAllHandler();
 
     res.status(200).send(allDiets);
+  } catch (error) {
+    const { method, originalUrl } = req;
+
+    errorHandlerHelper(res, method, originalUrl, error.message);
+  }
+});
+
+// * --------------------------------------
+// * GET ALL RELATED - query
+// * --------------------------------------
+dietsRouter.get("/related", async (req, res) => {
+  const { dietName } = req.query;
+
+  try {
+    const relatedDiets = await getAllRelated(dietName);
+
+    res.status(200).send(relatedDiets);
   } catch (error) {
     const { method, originalUrl } = req;
 
@@ -63,7 +81,7 @@ dietsRouter.post("/add", async (req, res) => {
 // * DELETE by id/pk - query
 // * --------------------------------------
 // - DELETE **diets/del?dietId=<DietId>** : Delete Diet From DB
-dietsRouter.post("/del/:dietId", async (req, res) => {
+dietsRouter.delete("/del/:dietId", async (req, res) => {
   const { dietId } = req.query;
 
   try {

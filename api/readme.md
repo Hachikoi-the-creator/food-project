@@ -10,6 +10,7 @@
 
 - GET **diets/all** : Get all diets from DB
 - GET **diets/id/:id** : get a single diet from BD by UUID
+- GET **related/?dietName** : Gets all recipes related to that diet (DB & API)
 - POST **diets/add?newDiet=<DietName>** : Add a diet by name to DB
 - DELETE **diets/del?dietId=<DietId>** : Delete Diet From DB
 
@@ -37,9 +38,22 @@
   "desc": "kekwkokokokokkoko",
   "healthyness": 14,
   "steps": ["111111s1111111", "222222222222", "3333333dd33"],
-  "imageUrl": "htpp:yomaaamasofat.com",
+  "imageUrl": "htpp:heyaaaa.com",
   "dietTypes": ["vegetarian"]
 }
+```
+
+## Insanity FUEL
+
+- [postgress tuto WHITE AF THO](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-update/)
+- not undercase attr names must be with ""
+- non-alphanum or alpha values must be with ''...
+
+```shell
+food=# UPDATE "Recipes"
+SET "imageUrl"='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
+WHERE id='c1c8f55c-31a3-4f52-8312-0ca04ed39d93';
+UPDATE 1
 ```
 
 ### Only valid endpoints

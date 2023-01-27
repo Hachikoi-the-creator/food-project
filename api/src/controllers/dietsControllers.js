@@ -1,7 +1,12 @@
 const hardCoddedDiets = require("../hardCoddedDiets");
 const { Diet, Recipe } = require("../db");
+const get100RandomRecipes = require("../utils/get100RandomRecipes");
+const {
+  getOnlyBasicsApi,
+  getOnlyBasicsWeirdgeDB,
+} = require("../utils/recipesCtrlHelpers");
 
-// ? Only gets executed if the result from Diet.findAll gave an empty arr, returns the created Diet object
+// * Only gets executed if the result from Diet.findAll gave an empty arr, returns the created Diet object
 const initialLoadHandler = async () => {
   // this is the format sequelize expects
   const bulkToCreate = hardCoddedDiets.map((d) => ({ dietName: d }));
@@ -28,6 +33,31 @@ module.exports = {
     }
 
     return res;
+  },
+
+  // * -------------------------------------
+  // * Gets all recipes than belong to X diet
+  // * -------------------------------------
+  getAllRelated: async (dietName) => {
+    const dbResults = await Diet.findAll({
+      where: { dietName },
+      include: {
+        model: Recipe,
+        attributes: ["id", "name", "imageUrl"],
+        include: Diet,
+      },
+    });
+    // return dbResults[0].Recipes;
+    const desiredDbFormat = getOnlyBasicsWeirdgeDB(dbResults);
+
+    const rnd100 = await get100RandomRecipes();
+    const matchingRecipes = rnd100.filter(
+      (recipe) => recipe.diets && recipe.diets.includes(dietName)
+    );
+
+    const desiredApiFormat = getOnlyBasicsApi(matchingRecipes);
+
+    return [...desiredDbFormat, ...desiredApiFormat];
   },
 
   // * -------------------------------------
