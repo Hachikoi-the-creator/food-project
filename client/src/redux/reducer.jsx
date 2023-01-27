@@ -1,29 +1,14 @@
+import { normalAlpha, reversedAlpha } from "../utils/reducerOrdering";
 // import all action types
 import {
   UPDATE_LOADING,
   GET_ALL_DIETS,
   GET_100_RECIPES,
   FILTER_RECIPES_BY_NAME,
+  FILTER_RECIPES_BY_DIET_TYPE,
   ORDER_RECIPES_BY_ALPHA,
 } from "./actions";
 
-const normalAlpha = (a, b) => {
-  if (a.name < b.name) {
-    return -1;
-  } else if (a.name > b.name) {
-    return 1;
-  }
-  return 0;
-};
-
-const reversedAlpha = (a, b) => {
-  if (a.name > b.name) {
-    return -1;
-  } else if (a.name < b.name) {
-    return 1;
-  }
-  return 0;
-};
 // helpers imports
 const initialState = {
   loading: false,
@@ -53,24 +38,16 @@ export default (state = initialState, action) => {
         filteredRecipes: action.payload,
       };
     // ! *******************************************************
+    // both do exatly the same, just update 'filteredRecipes'
     case FILTER_RECIPES_BY_NAME:
+    case FILTER_RECIPES_BY_DIET_TYPE:
       return {
         ...state,
         filteredRecipes: [...action.payload],
       };
     // ! *******************************************************
-    // case FILTER_RECIPES_BY_DIET_TYPE:
-    //   const dietFiltered = state.apiRecipes.filter((recipe) =>
-    //     recipe.dietType.includes(action.payload)
-    //   );
-
-    //   return {
-    //     ...state,
-    //     filteredRecipes: dietFiltered,
-    //   };
-    // ! *******************************************************
     case ORDER_RECIPES_BY_ALPHA:
-      // if true, alpha ; else , inversed alpha
+      // if true => alpha | else => reversed alpha
       const alphaOrderedDiets = action.payload
         ? state.filteredRecipes.sort((a, b) => normalAlpha(a, b))
         : state.filteredRecipes.sort((a, b) => reversedAlpha(a, b));

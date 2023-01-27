@@ -1,6 +1,4 @@
 import axios from "axios";
-// import allDiets from "../allRecipes";
-// import allRecipes from "../allRecipes";
 
 const baseUrl = "http://localhost:1313";
 // import.meta.env.VITE_API_BASE_URL;
@@ -28,11 +26,10 @@ export function updateLoading() {
 export function apiRecipesFetch() {
   return async (dispatch) => {
     // dispatch(updateLoading());
-
     const { data } = await axios(`${baseUrl}/recipes?name=c&amount=113`);
+    // dispatch(updateLoading());
 
     dispatch({ type: GET_100_RECIPES, payload: data });
-    // dispatch(updateLoading());
   };
 }
 
@@ -42,11 +39,10 @@ export function apiRecipesFetch() {
 export function getAllDiets() {
   return async (dispatch) => {
     // dispatch(updateLoading());
-
     const { data: allDiets } = await axios(`${baseUrl}/diets/all`);
+    // dispatch(updateLoading());
 
     dispatch({ type: GET_ALL_DIETS, payload: allDiets });
-    // dispatch(updateLoading());
   };
 }
 
@@ -60,11 +56,29 @@ export function getAllDiets() {
 export function filterRecipesByName(name) {
   return async (dispatch) => {
     // dispatch(updateLoading());
-
     const { data } = await axios(`${baseUrl}/recipes?name=${name}`);
+    // dispatch(updateLoading());
 
     dispatch({ type: FILTER_RECIPES_BY_NAME, payload: data });
+  };
+}
+
+// * -------------------------------
+// * FILTER_RECIPES_BY_DIET_TYPE
+// * -------------------------------
+/**
+ * @param {String} dietName lowecase name of the diet type
+ * @returns {ReduxAction}
+ */
+export function filterByDietType(dietName) {
+  return async (dispatch) => {
     // dispatch(updateLoading());
+    const { data } = await axios(
+      `${baseUrl}/diets/related/?dietName=${dietName}`
+    );
+    // dispatch(updateLoading());
+
+    dispatch({ type: FILTER_RECIPES_BY_NAME, payload: data });
   };
 }
 
@@ -77,15 +91,4 @@ export function filterRecipesByName(name) {
  */
 export function filterByAlpha(ascending) {
   return { type: ORDER_RECIPES_BY_ALPHA, payload: ascending };
-}
-
-// * -------------------------------
-// * FILTER_RECIPES_BY_DIET_TYPE
-// * -------------------------------
-/**
- * @param {String} dietName lowecase name of the diet type
- * @returns {ReduxAction}
- */
-export function filterByDietType(dietName) {
-  return { type: FILTER_RECIPES_BY_DIET_TYPE, payload: dietName };
 }
