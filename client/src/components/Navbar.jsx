@@ -12,9 +12,6 @@ export default function Navbar() {
           <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link to="/login">Landing</Link>
-        </li>
-        <li>
           <Link to="/create">Create</Link>
         </li>
       </ul>

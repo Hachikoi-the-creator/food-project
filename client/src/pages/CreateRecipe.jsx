@@ -2,9 +2,11 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import inputsValidators from "../utils/inputsValidators";
-import Input from "../components/Input";
+import Input from "../components/inputs/Input";
 import CheckboxOptions from "../components/CheckboxOptions";
 import { getAllDiets } from "../redux/actions";
+import IngredientsList from "../components/IngredientsList";
+import TextArea from "../components/inputs/TextArea";
 
 export default function CreateRecipe() {
   const allDiets = useSelector((state) => state.allDiets);
@@ -15,7 +17,6 @@ export default function CreateRecipe() {
     { name: "healthyness", type: "number" },
     { name: "imageUrl", type: "text" },
   ];
-  const stepsRef = useRef();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -24,14 +25,15 @@ export default function CreateRecipe() {
     healthyness: "",
     diets: [],
     steps: "",
-    ingredientsList: "",
+    ingredientsList: [{}],
   });
 
   useEffect(() => {
     dispatcher(getAllDiets());
   }, []);
 
-  // ? 4 basic inputs
+  // *********************************************************
+  // 4 basic inputs
   const blurHandler = (key, value) => {
     // returns true or string with error description
     const isValid = inputsValidators[key](value);
@@ -47,6 +49,7 @@ export default function CreateRecipe() {
     }
   };
 
+  // *********************************************************
   const dietsHandler = (e) => {
     const value = e.target.name;
     const alreadySelected = formData.diets.includes(value);
@@ -60,10 +63,12 @@ export default function CreateRecipe() {
     });
   };
 
+  // *********************************************************
   const eraseDietSelections = () => {
     setFormData((prev) => ({ ...prev, diets: [] }));
   };
 
+  // *********************************************************
   const formHandler = async (e) => {
     e.preventDefault();
     // check if there's a error in the state error
@@ -85,6 +90,15 @@ export default function CreateRecipe() {
     console.log(res);
   };
 
+  // *********************************************************
+  const ingredientListHandler = (pseudoID, ingObject) => {
+    setFormData((prev) => {
+      const modIngredientList = (prev.ingredientsList[pseudoID] = ingObject);
+      return { ...prev, ingredientsList: modIngredientList };
+    });
+  };
+
+  // *********************************************************
   return (
     <div className="create-container">
       <form onSubmit={formHandler}>
@@ -102,11 +116,12 @@ export default function CreateRecipe() {
         />
         <button onClick={eraseDietSelections}>Unselect All</button>
         {/* Hell of several steps... For now ; sparated would be good enough*/}
-        <label htmlFor="steps">
+        {/* <label htmlFor="steps">
           Write down the steps to cook this recipe, and separate them with an
           semicolon ';'
-        </label>
-        <textarea
+        </label> */}
+        <TextArea name={"steps"} cols={15} rows={10} handler={blurHandler} />
+        {/* <textarea
           name="steps"
           id="steps"
           minLength={"20ch"}
@@ -119,7 +134,10 @@ export default function CreateRecipe() {
               e.target.value.split(";").map((e) => e.trim())
             )
           }
-        />
+        /> */}
+        {/* INGREDIENTS LIST.... */}
+        <IngredientsList handler={ingredientListHandler} />
+
         <button type="submit">Submit</button>
       </form>
     </div>

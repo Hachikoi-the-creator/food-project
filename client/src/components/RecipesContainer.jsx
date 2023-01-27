@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { MainContainer, FlexWrapper } from "./styles/RecipesContainer";
+import { MainContainer } from "./styles/RecipesContainer";
+import { FlexWrapper } from "./styles/Var";
 import Paged from "./Paged";
 import Filters from "./Filters";
 import RecipeCard from "./RecipeCard";
@@ -9,10 +10,7 @@ export default function RecipesContainer() {
   const filteredRecipes = useSelector((state) => state.filteredRecipes);
   const [page, setPage] = useState(1);
   // redux is not instant
-  const pagesRecipes = filteredRecipes?.slice(
-    (page - 1) * 10 + 10,
-    page * 10 + 10
-  );
+  const pagesRecipes = filteredRecipes?.slice((page - 1) * 10, page * 10);
 
   return (
     <MainContainer className="recipes-container">

@@ -20,7 +20,7 @@ export default function RecipeDetails() {
       const { data: recipe } = await axios(`${baseUrl}/recipes/id/${id}`);
       setRecipeData(recipe);
     })();
-  }, [""]);
+  }, []);
 
   console.log(recipeData);
 

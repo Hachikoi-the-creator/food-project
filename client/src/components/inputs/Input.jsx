@@ -1,10 +1,11 @@
 import { useRef } from "react";
+import { ColumnFlexContainer } from "../styles/Var";
 
 export default function Input({ e: { name, type, tag }, blurHandler }) {
   const inputRef = useRef();
 
   return (
-    <div className={`input ${name}`}>
+    <ColumnFlexContainer className={`input ${name}`}>
       <label htmlFor={name}>{tag || name}</label>
       <input
         type={type}
@@ -14,6 +15,6 @@ export default function Input({ e: { name, type, tag }, blurHandler }) {
         onBlur={() => blurHandler(name, inputRef.current.value)}
       />
       {/* {!!error && <p className="error">Invalid input format</p>} */}
-    </div>
+    </ColumnFlexContainer>
   );
 }

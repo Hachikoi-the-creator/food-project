@@ -11,7 +11,7 @@ export default function Paged({ total, page, setPage }) {
         {/* START */}
         {page >= 4 && (
           <li>
-            <button onClick={() => setPage(0)}>{"<<"}</button>
+            <button onClick={() => setPage(1)}>{"<<"}</button>
           </li>
         )}
 
