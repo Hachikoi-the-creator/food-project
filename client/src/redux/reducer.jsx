@@ -52,13 +52,14 @@ export default (state = initialState, action) => {
     // ! *******************************************************
     case ORDER_RECIPES_BY_ALPHA:
       // if true => alpha | else => reversed alpha
+      const recipesCopy = [...state.filteredRecipes];
       const alphaOrderedDiets = action.payload
-        ? state.filteredRecipes.sort((a, b) => normalAlpha(a, b))
-        : state.filteredRecipes.sort((a, b) => reversedAlpha(a, b));
+        ? recipesCopy.sort((a, b) => normalAlpha(a, b))
+        : recipesCopy.sort((a, b) => reversedAlpha(a, b));
 
       return {
         ...state,
-        filteredRecipes: [...alphaOrderedDiets],
+        filteredRecipes: alphaOrderedDiets,
       };
     // ! *******************************************************
     default:

@@ -1,16 +1,16 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { filterByAlpha, filterRecipesByName } from "../redux/actions";
+import {
+  filterByAlpha,
+  filterByDietType,
+  filterRecipesByName,
+} from "../redux/actions";
 import DietTypesSelector from "./DietTypesSelector";
 import { GenericFlexContainer } from "./styles/FilterStuff";
 
 class Filters extends Component {
   handleDietAlpha(isAscendingOrder) {
     this.props.filterByAlpha(isAscendingOrder);
-  }
-
-  handleSearchByName(name) {
-    if (name.length) this.props.filterRecipesByName(name);
   }
 
   render() {
@@ -24,10 +24,7 @@ class Filters extends Component {
           </button>
         </GenericFlexContainer>
 
-        <DietTypesSelector
-          label={"Filter by diets"}
-          handler={this.handleSearchByName}
-        />
+        <DietTypesSelector />
       </div>
     );
   }
@@ -40,7 +37,6 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   filterByAlpha,
-  filterRecipesByName,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);
