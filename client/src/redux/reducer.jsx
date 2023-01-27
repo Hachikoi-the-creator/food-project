@@ -26,17 +26,21 @@ export default (state = initialState, action) => {
       };
     // ! *******************************************************
     case GET_ALL_DIETS:
-      return {
-        ...state,
-        allDiets: action.payload,
-      };
+      return state.allDiets.length
+        ? { ...state }
+        : {
+            ...state,
+            allDiets: action.payload,
+          };
     // ! *******************************************************
     case GET_100_RECIPES:
-      return {
-        ...state,
-        apiRecipes: action.payload,
-        filteredRecipes: action.payload,
-      };
+      return state.filteredRecipes.length
+        ? { ...state }
+        : {
+            ...state,
+            apiRecipes: action.payload,
+            filteredRecipes: action.payload,
+          };
     // ! *******************************************************
     // both do exatly the same, just update 'filteredRecipes'
     case FILTER_RECIPES_BY_NAME:

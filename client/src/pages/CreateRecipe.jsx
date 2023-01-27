@@ -1,11 +1,14 @@
-import Input from "../components/Input";
+import axios from "axios";
+import { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import inputsValidators from "../utils/inputsValidators";
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import Input from "../components/Input";
 import CheckboxOptions from "../components/CheckboxOptions";
+import { getAllDiets } from "../redux/actions";
 
 export default function CreateRecipe() {
   const allDiets = useSelector((state) => state.allDiets);
+  const dispatcher = useDispatch();
   const inputInfo = [
     { name: "name", type: "text" },
     { name: "desc", type: "text", tag: "description (can use HTML tags)" },
@@ -13,7 +16,7 @@ export default function CreateRecipe() {
     { name: "imageUrl", type: "text" },
   ];
   const stepsRef = useRef();
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     desc: "",
@@ -24,10 +27,15 @@ export default function CreateRecipe() {
     ingredientsList: "",
   });
 
+  useEffect(() => {
+    dispatcher(getAllDiets());
+  }, []);
+
   // ? 4 basic inputs
   const blurHandler = (key, value) => {
-    const isValid = inputsValidators[key](key);
-    console.log(isValid);
+    // returns true or string with error description
+    const isValid = inputsValidators[key](value);
+    console.log(isValid, "key: " + key, "value: " + value);
 
     if (isValid.length) {
       //show modal that tells the error and how to solve it
@@ -35,7 +43,7 @@ export default function CreateRecipe() {
       setError(`Error in ${key} validation`);
     } else {
       setFormData((prev) => ({ ...prev, [key]: value }));
-      setError(null);
+      setError("");
     }
   };
 
@@ -56,41 +64,64 @@ export default function CreateRecipe() {
     setFormData((prev) => ({ ...prev, diets: [] }));
   };
 
-  const formHandler = () => {
+  const formHandler = async (e) => {
+    e.preventDefault();
     // check if there's a error in the state error
-    // check all inputs have the data we expect them to have
-    // do a new FormData() and check the back get's all the info expects to get
-    // do a full post and check it was added to the DB
+    if (error.length) {
+      console.log("Theres an error in some innputs", error.toString());
+      return;
+    }
+    // check if some state is empty
+    // if (!Object.values(error).every(Boolean)) {
+    //   console.log("Not all fields havee been filled");
+    //   return;
+    // }
+
+    // don't need FormData with Axios :D
+    const res = await axios.post(
+      "http://localhost:1313/recipes/test",
+      formData
+    );
+    console.log(res);
   };
 
   return (
     <div className="create-container">
-      <h1>{error}</h1>
+      <form onSubmit={formHandler}>
+        <h1>{error}</h1>
 
-      {/* simple String/Number inputs */}
-      {inputInfo.map((e) => (
-        <Input key={e.name} {...{ e }} {...{ blurHandler }} />
-      ))}
-      {/* complex multiple choice */}
-      <CheckboxOptions
-        options={allDiets}
-        title="Select all diets related to the recipe"
-        handler={dietsHandler}
-      />
-      <button onClick={eraseDietSelections}>Unselect All</button>
-      {/* Hell of several steps... For now ; sparated would be good enough*/}
-      <label htmlFor="steps">
-        Write down the steps to cook this recipe, and separate them with an
-        semicolon ';'
-      </label>
-      <textarea
-        name="steps"
-        id="steps"
-        minLength={"20ch"}
-        rows="5"
-        ref={stepsRef}
-        placeholder="WRITE!"
-      />
+        {/* simple String/Number inputs */}
+        {inputInfo.map((e) => (
+          <Input key={e.name} {...{ e }} {...{ blurHandler }} />
+        ))}
+        {/* complex multiple choice */}
+        <CheckboxOptions
+          options={allDiets}
+          title="Select all diets related to the recipe"
+          handler={dietsHandler}
+        />
+        <button onClick={eraseDietSelections}>Unselect All</button>
+        {/* Hell of several steps... For now ; sparated would be good enough*/}
+        <label htmlFor="steps">
+          Write down the steps to cook this recipe, and separate them with an
+          semicolon ';'
+        </label>
+        <textarea
+          name="steps"
+          id="steps"
+          minLength={"20ch"}
+          rows="5"
+          ref={stepsRef}
+          placeholder="WRITE!"
+          onBlur={(e) =>
+            blurHandler(
+              "steps",
+              e.target.value.split(";").map((e) => e.trim())
+            )
+          }
+        />
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 }
