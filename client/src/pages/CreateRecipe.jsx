@@ -17,7 +17,7 @@ export default function CreateRecipe() {
     { name: "healthyness", type: "number" },
     { name: "imageUrl", type: "text" },
   ];
-  const [error, setError] = useState("");
+  const [error, setError] = useState("no input has been filled");
   const [formData, setFormData] = useState({
     name: "",
     desc: "",
@@ -25,7 +25,7 @@ export default function CreateRecipe() {
     healthyness: "",
     diets: [],
     steps: "",
-    ingredientsList: [{}],
+    ingredientsList: [{}, {}, {}],
   });
 
   useEffect(() => {
@@ -70,6 +70,17 @@ export default function CreateRecipe() {
   };
 
   // *********************************************************
+  const ingredientListHandler = (pseudoID, ingObject) => {
+    setFormData((prev) => {
+      const copy = [...prev.ingredientsList];
+      copy.splice(pseudoID, 1, ingObject);
+      console.log("updated parent: ", copy);
+
+      return { ...prev, ingredientsList: copy };
+    });
+  };
+
+  // *********************************************************
   const formHandler = async (e) => {
     e.preventDefault();
     // check if there's a error in the state error
@@ -77,26 +88,25 @@ export default function CreateRecipe() {
       console.log("Theres an error in some innputs", error.toString());
       return;
     }
-    // check if some state is empty
-    // if (!Object.values(error).every(Boolean)) {
-    //   console.log("Not all fields havee been filled");
-    //   return;
-    // }
 
-    // don't need FormData with Axios :D
-    const res = await axios.post(
-      "http://localhost:1313/recipes/test",
-      formData
-    );
-    console.log(res);
-  };
+    // check if some state is empty by looking at the error state & check if have a valid thingy for every ingredient
+    const enoughIngredients =
+      formData.ingredientsList.length === 3 &&
+      formData.ingredientsList.every(
+        (obj) => obj.name && obj.amoun && obj.unit
+      );
 
-  // *********************************************************
-  const ingredientListHandler = (pseudoID, ingObject) => {
-    setFormData((prev) => {
-      const modIngredientList = (prev.ingredientsList[pseudoID] = ingObject);
-      return { ...prev, ingredientsList: modIngredientList };
-    });
+    if (error.length || enoughIngredients) {
+      console.log("Err in some state take a look for yourself mf", formData);
+    } else {
+      console.log("All inputs area valid pog");
+      // don't need FormData with Axios :D
+      const res = await axios
+        .post("http://localhost:1313/recipes/test", formData)
+        .catch((err) => console.log("failed to create recipe", err));
+
+      console.log(res);
+    }
   };
 
   // *********************************************************

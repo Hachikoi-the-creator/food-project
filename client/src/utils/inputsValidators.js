@@ -5,6 +5,7 @@ export default {
   healthyness: validateHealthyness,
   steps: validateSteps,
   imageUrl: validateImageUrl,
+  allInputsValidation,
 };
 /**
  *"ingredientsList": [{name:String, amount:Number, unit:String}]
@@ -15,6 +16,7 @@ export default {
   "imageUrl": String,
  */
 //*/*/*/*/*/*//*/*/*//*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+function allInputsValidation(kekW) {}
 /**
  * @param {Object[]} ingArr Array of ingredients {name:String, amount:Number, unit:String}; .... Just verify they have a truthy value
  * @returns {Boolean|String} wheter or not is a valid value OR a string with the error description

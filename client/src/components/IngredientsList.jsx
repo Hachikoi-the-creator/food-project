@@ -15,9 +15,9 @@ export default function IngredientsList({
   const successHandler = (id, key, value) => {
     const currObj = ingArr[id];
     const update = { ...currObj, [key]: value };
-    console.log("updated entry", update);
+    // console.log("updated entry", update);
 
-    // mainSuccessHandler(id,update)
+    mainSuccessHandler(id, update);
     setIngArr((prev) => {
       return { ...prev, [id]: update };
     });
@@ -30,6 +30,25 @@ export default function IngredientsList({
     mainErrorHandler(errMsg);
   };
 
+  const blurHandler = (id, key, value) => {
+    console.log(`id: ${id}, key: ${key}, value: ${value}`);
+
+    switch (key) {
+      case "name":
+        return value.length > 0
+          ? successHandler(id, key, value)
+          : errorHandler(key, value);
+      case "amount":
+        return value > 0
+          ? successHandler(id, key, value)
+          : errorHandler(key, value);
+      case "unit":
+        return value.length > 0
+          ? successHandler(id, key, value)
+          : errorHandler(key, value);
+    }
+  };
+
   useEffect(() => {
     // console.log(">> useEffected", ingArr);
   }, [ingArr]);
@@ -39,12 +58,7 @@ export default function IngredientsList({
       <h3 className="title">Write the recipe ingredients</h3>
       <IngredientListContainer className="ing-list-container">
         {[0, 1, 2].map((id) => (
-          <Ingredient
-            key={id}
-            {...{ id }}
-            {...{ errorHandler }}
-            {...{ successHandler }}
-          />
+          <Ingredient key={id} {...{ id }} handler={blurHandler} />
         ))}
       </IngredientListContainer>
     </>
@@ -52,29 +66,12 @@ export default function IngredientsList({
 }
 
 // ******************************************** lil children
-function Ingredient({ successHandler, id, errorHandler }) {
+function Ingredient({ handler, id }) {
   // * ---------cant see lmao---------------- *//
-  const nameRef = useRef();
-  const amountRef = useRef();
-  const unitRef = useRef();
 
-  const blurHandler = (inputName) => {
-    // avoid unwanted behaivour ON undefined values
-    const name = nameRef.current.value || "";
-    const amount = amountRef.current.value || 0;
-    const unit = unitRef.current.value || "";
-
-    name.length < 1
-      ? errorHandler("name", name)
-      : successHandler(id, inputName, name);
-
-    amount < 1
-      ? errorHandler("amount", amount)
-      : successHandler(id, inputName, amount);
-
-    unit.length < 1
-      ? errorHandler("unit", unit)
-      : successHandler(id, inputName, unit);
+  const blurHandler = (value, inputName) => {
+    // console.log("val: " + value, "name: " + inputName);
+    handler(id, inputName, value);
   };
 
   return (
@@ -84,8 +81,7 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="text"
           id="name"
-          onBlur={() => blurHandler("name")}
-          ref={nameRef}
+          onBlur={(e) => blurHandler(e.target.value, "name")}
         />
       </div>
 
@@ -94,8 +90,7 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="number"
           id="amount"
-          onBlur={() => blurHandler("amount")}
-          ref={amountRef}
+          onBlur={(e) => blurHandler(e.target.value, "amount")}
         />
       </div>
 
@@ -104,8 +99,7 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="text"
           id="unit"
-          onBlur={() => blurHandler("unit")}
-          ref={unitRef}
+          onBlur={(e) => blurHandler(e.target.value, "unit")}
         />
       </div>
     </IngredientInfo>
