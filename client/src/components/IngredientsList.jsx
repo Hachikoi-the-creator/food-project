@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IngredientInfo, IngredientListContainer } from "./styles/FormStuff";
 
 export default function IngredientsList({
@@ -31,7 +31,7 @@ export default function IngredientsList({
   };
 
   useEffect(() => {
-    console.log("updated state", ingArr);
+    // console.log(">> useEffected", ingArr);
   }, [ingArr]);
 
   return (
@@ -40,6 +40,7 @@ export default function IngredientsList({
       <IngredientListContainer className="ing-list-container">
         {[0, 1, 2].map((id) => (
           <Ingredient
+            key={id}
             {...{ id }}
             {...{ errorHandler }}
             {...{ successHandler }}
@@ -53,17 +54,27 @@ export default function IngredientsList({
 // ******************************************** lil children
 function Ingredient({ successHandler, id, errorHandler }) {
   // * ---------cant see lmao---------------- *//
-  const blurHandler = (value, inputName) => {
-    // amount would be the only numeric value
-    console.log("else 1", inputName);
-    if (inputName === "amount" && value <= 0) {
-      errorHandler(inputName, value);
-    } else if (inputName !== "amount" && value.length < 0) {
-      errorHandler(inputName, value);
-    } else {
-      // console.log("value", inputName, "is valid");
-      successHandler(id, inputName, value);
-    }
+  const nameRef = useRef();
+  const amountRef = useRef();
+  const unitRef = useRef();
+
+  const blurHandler = (inputName) => {
+    // avoid unwanted behaivour ON undefined values
+    const name = nameRef.current.value || "";
+    const amount = amountRef.current.value || 0;
+    const unit = unitRef.current.value || "";
+
+    name.length < 1
+      ? errorHandler("name", name)
+      : successHandler(id, inputName, name);
+
+    amount < 1
+      ? errorHandler("amount", amount)
+      : successHandler(id, inputName, amount);
+
+    unit.length < 1
+      ? errorHandler("unit", unit)
+      : successHandler(id, inputName, unit);
   };
 
   return (
@@ -73,7 +84,8 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="text"
           id="name"
-          onBlur={(e) => blurHandler(e.target.value, "name")}
+          onBlur={() => blurHandler("name")}
+          ref={nameRef}
         />
       </div>
 
@@ -82,7 +94,8 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="number"
           id="amount"
-          onBlur={(e) => blurHandler(e.target.value, "amount")}
+          onBlur={() => blurHandler("amount")}
+          ref={amountRef}
         />
       </div>
 
@@ -91,7 +104,8 @@ function Ingredient({ successHandler, id, errorHandler }) {
         <input
           type="text"
           id="unit"
-          onBlur={(e) => blurHandler(e.target.value, "unit")}
+          onBlur={() => blurHandler("unit")}
+          ref={unitRef}
         />
       </div>
     </IngredientInfo>
