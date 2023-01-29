@@ -1,4 +1,5 @@
 import { ColumnFlexContainer } from "../styles/Var";
+import { TextAreaStyled } from "../styles/FormStuff";
 
 export default function TextArea({ name, cols, rows, handler }) {
   const blurHandler = (e) => {
@@ -9,16 +10,21 @@ export default function TextArea({ name, cols, rows, handler }) {
   };
 
   return (
-    <ColumnFlexContainer>
-      <label htmlFor={name}>Write a {name}</label>
-      <textarea
-        name={name}
-        id={name}
-        cols={cols}
-        rows={rows}
-        onBlur={blurHandler}
-        placeholder="WRITE!"
-      ></textarea>
+    <ColumnFlexContainer className="text-area-container">
+      <TextAreaStyled className="textarea-inner-wrapper">
+        <label className="title" htmlFor={name}>
+          Write the {name}
+        </label>
+        <p>Separate them with a ; (pls)</p>
+        <textarea
+          name={name}
+          id={name}
+          cols={cols}
+          rows={rows}
+          onBlur={blurHandler}
+          placeholder="WRITE!"
+        ></textarea>
+      </TextAreaStyled>
     </ColumnFlexContainer>
   );
 }

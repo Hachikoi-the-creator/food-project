@@ -80,3 +80,34 @@ img {
   flex-direction: column;
   gap: 0.3rem;
 }
+
+.margin-left-small {
+  margin-left: 0.7rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+button[type="submit"] {
+  background-color: rgb(231, 122, 255);
+  width: 60%;
+  margin: 1rem;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  color: rgb(181, 0, 0);
+}
+
+.title {
+  font-size: 1.3rem;
+  text-decoration: underline;
+  margin-top: 1rem;
+}

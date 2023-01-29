@@ -50,14 +50,15 @@ export default function CreateRecipe() {
   };
 
   // *********************************************************
-  const dietsHandler = (e) => {
-    const value = e.target.name;
+  const dietsHandler = (value) => {
+    // TODO: debug this shit later
     const alreadySelected = formData.diets.includes(value);
 
     setFormData((prev) => {
       const updatedArr = alreadySelected
         ? prev.diets.filter((e) => e !== value)
         : [...prev.diets, value];
+      console.log(value, updatedArr);
 
       return { ...prev, diets: updatedArr };
     });
@@ -101,8 +102,9 @@ export default function CreateRecipe() {
   // *********************************************************
   return (
     <div className="create-container">
-      <form onSubmit={formHandler}>
-        <h1>{error}</h1>
+      <form onSubmit={formHandler} className="flex-center">
+        <h1>Enter recipe data</h1>
+        <h2 className="error">{error}</h2>
 
         {/* simple String/Number inputs */}
         {inputInfo.map((e) => (
@@ -113,31 +115,16 @@ export default function CreateRecipe() {
           options={allDiets}
           title="Select all diets related to the recipe"
           handler={dietsHandler}
+          resetHandler={eraseDietSelections}
         />
-        <button onClick={eraseDietSelections}>Unselect All</button>
         {/* Hell of several steps... For now ; sparated would be good enough*/}
-        {/* <label htmlFor="steps">
-          Write down the steps to cook this recipe, and separate them with an
-          semicolon ';'
-        </label> */}
         <TextArea name={"steps"} cols={15} rows={10} handler={blurHandler} />
-        {/* <textarea
-          name="steps"
-          id="steps"
-          minLength={"20ch"}
-          rows="5"
-          ref={stepsRef}
-          placeholder="WRITE!"
-          onBlur={(e) =>
-            blurHandler(
-              "steps",
-              e.target.value.split(";").map((e) => e.trim())
-            )
-          }
-        /> */}
-        {/* INGREDIENTS LIST.... */}
-        <IngredientsList handler={ingredientListHandler} />
 
+        {/* INGREDIENTS LIST.... */}
+        <IngredientsList
+          mainErrorHandler={(msg) => setError(msg)}
+          mainSuccessHandler={ingredientListHandler}
+        />
         <button type="submit">Submit</button>
       </form>
     </div>
