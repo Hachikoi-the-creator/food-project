@@ -57,8 +57,15 @@ module.exports = {
     furtherRecipeCheck(recipeData);
 
     // if you send an attr not defined in model, it'll Throw error... :'c
-    const { name, desc, healthyness, steps, imageUrl, ingredientsList } =
-      recipeData;
+    const {
+      name,
+      desc,
+      healthyness,
+      steps,
+      imageUrl,
+      ingredientsList,
+      dietTypes,
+    } = recipeData;
 
     const createdRecipe = await Recipe.create({
       name,
@@ -81,6 +88,10 @@ module.exports = {
     matchedDiets.forEach((diet) => {
       createdRecipe.addDiet(diet);
     });
+
+    // * Link to Diets table BETTER
+    // const allDiets = await Diet.findAll({ where: { name: dietTypes } });
+    // await createdRecipe.addDiets(allDiets);
 
     return createdRecipe;
   },

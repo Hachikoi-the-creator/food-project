@@ -21,9 +21,6 @@ recipesRouter.get("/", async (req, res) => {
 
   try {
     const recipes = await getByNameHandler(name, amount);
-    const resultMsg = recipes.length
-      ? "Resources Found :D"
-      : "Couldn't find anything D:";
 
     // 204 would be the correct response, but would make FE work harder
     res.status(200).send(recipes);
