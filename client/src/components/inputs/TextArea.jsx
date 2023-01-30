@@ -1,4 +1,4 @@
-import { ColumnFlexContainer } from "../styles/Var";
+import { ColumnFlexContainer } from "../styles/RecipeMain";
 import { TextAreaStyled } from "../styles/FormStuff";
 
 export default function TextArea({ name, cols, rows, handler }) {

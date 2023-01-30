@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ColumnFlexContainer } from "../styles/Var";
+import { ColumnFlexContainer } from "../styles/RecipeMain";
 
 export default function Input({ e: { name, type, tag }, blurHandler }) {
   const inputRef = useRef();

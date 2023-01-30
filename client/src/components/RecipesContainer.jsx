@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { MainContainer } from "./styles/RecipesContainer";
-import { FlexWrapper } from "./styles/Var";
+import { MainContainer } from "./styles/Var";
+import { FlexWrapper } from "./styles/RecipeMain";
 import Paged from "./Paged";
 import Filters from "./Filters";
 import RecipeCard from "./RecipeCard";

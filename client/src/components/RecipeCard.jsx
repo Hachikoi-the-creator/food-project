@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Card } from "./styles/RecipeCard";
+import { Card } from "./styles/RecipeMain";
 
 export default function RecipeCard({ data }) {
   const { createdInDb, name, imageUrl, dietTypes, healthyness, id } = data;

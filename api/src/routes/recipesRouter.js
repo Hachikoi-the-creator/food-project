@@ -83,7 +83,7 @@ recipesRouter.post("/add", async (req, res) => {
   } catch (error) {
     const { method, originalUrl } = req;
 
-    errorResponseHelper(res, method, originalUrl, error.message);
+    errorResponseHelper(res, method, originalUrl, error);
   }
 });
 
@@ -149,6 +149,14 @@ recipesRouter.delete("/del/:id", async (req, res) => {
     const { method, originalUrl } = req;
     errorResponseHelper(res, method, originalUrl, error.message);
   }
+});
+
+// TODO: remove later
+recipesRouter.post("/test", (req, res) => {
+  const { name, desc, imageUrl, healthyness, diets, steps, ingredientsList } =
+    req.body;
+
+  res.send(req.body);
 });
 
 module.exports = recipesRouter;

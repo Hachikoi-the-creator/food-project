@@ -1,4 +1,4 @@
-import { FlexWrapper } from "./styles/Var";
+import { FlexWrapper } from "./styles/RecipeMain";
 import { SelectDietsWrapper } from "./styles/FormStuff";
 import { useState } from "react";
 

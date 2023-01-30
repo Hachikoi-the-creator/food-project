@@ -1,6 +1,28 @@
 import styled from "styled-components";
 import { BoxShadow } from "./mixins";
 
+export const ColumnFlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const FlexWrapper = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
 export const Card = styled.div`
   .inner-wrapper {
     border-radius: 1rem;
@@ -9,8 +31,7 @@ export const Card = styled.div`
     background-position: 20% center;
     background-size: cover;
     /* object-fit: cover; */
-    width: 30vw;
-    height: 20vw;
+    height: 30ch;
     padding: 0.2rem;
 
     .title {

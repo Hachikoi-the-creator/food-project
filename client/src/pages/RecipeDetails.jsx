@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { MainContainer } from "../components/styles/RecipesContainer";
+import { MainContainer } from "../components/styles/Var";
 import { OrderedList, RecipeStyles } from "../components/styles/RecipeDetails";
 
 export default function RecipeDetails() {

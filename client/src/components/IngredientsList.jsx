@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IngredientInfo, IngredientListContainer } from "./styles/FormStuff";
 
 export default function IngredientsList({

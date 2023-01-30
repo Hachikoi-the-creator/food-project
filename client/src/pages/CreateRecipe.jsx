@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import inputsValidators from "../utils/inputsValidators";
 import Input from "../components/inputs/Input";
@@ -23,7 +23,7 @@ export default function CreateRecipe() {
     desc: "",
     imageUrl: "",
     healthyness: "",
-    diets: [],
+    dietTypes: [],
     steps: "",
     ingredientsList: [{}, {}, {}],
   });
@@ -52,15 +52,15 @@ export default function CreateRecipe() {
   // *********************************************************
   const dietsHandler = (value) => {
     // TODO: debug this shit later
-    const alreadySelected = formData.diets.includes(value);
+    const alreadySelected = formData.dietTypes.includes(value);
 
     setFormData((prev) => {
       const updatedArr = alreadySelected
         ? prev.diets.filter((e) => e !== value)
-        : [...prev.diets, value];
+        : [...prev.dietTypes, value];
       console.log(value, updatedArr);
 
-      return { ...prev, diets: updatedArr };
+      return { ...prev, dietTypes: updatedArr };
     });
   };
 
@@ -102,10 +102,10 @@ export default function CreateRecipe() {
       console.log("All inputs area valid pog");
       // don't need FormData with Axios :D
       const res = await axios
-        .post("http://localhost:1313/recipes/test", formData)
+        .post("http://localhost:1313/recipes/add", formData)
         .catch((err) => console.log("failed to create recipe", err));
 
-      console.log(res);
+      console.log(res.data);
     }
   };
 
