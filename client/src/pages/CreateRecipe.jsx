@@ -9,6 +9,7 @@ import IngredientsList from "../components/IngredientsList";
 import TextArea from "../components/inputs/TextArea";
 
 export default function CreateRecipe() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const allDiets = useSelector((state) => state.allDiets);
   const dispatcher = useDispatch();
   const inputInfo = [
@@ -102,7 +103,7 @@ export default function CreateRecipe() {
       console.log("All inputs area valid pog");
       // don't need FormData with Axios :D
       const res = await axios
-        .post("http://localhost:1313/recipes/add", formData)
+        .post(`${BASE_URL}/recipes/add`, formData)
         .catch((err) => console.log("failed to create recipe", err));
 
       console.log(res.data);

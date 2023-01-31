@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:1313";
-// import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const UPDATE_LOADING = "UPDATE_LOADING";
 export const GET_100_RECIPES = "GET_100_RECIPES";
@@ -26,7 +25,7 @@ export function updateLoading() {
 export function apiRecipesFetch() {
   return async (dispatch) => {
     // dispatch(updateLoading());
-    const { data } = await axios(`${baseUrl}/recipes?name=c&amount=113`);
+    const { data } = await axios(`${BASE_URL}/recipes?name=c&amount=113`);
     // dispatch(updateLoading());
 
     dispatch({ type: GET_100_RECIPES, payload: data });
@@ -39,7 +38,7 @@ export function apiRecipesFetch() {
 export function getAllDiets() {
   return async (dispatch) => {
     // dispatch(updateLoading());
-    const { data: allDiets } = await axios(`${baseUrl}/diets/all`);
+    const { data: allDiets } = await axios(`${BASE_URL}/diets/all`);
     // dispatch(updateLoading());
 
     dispatch({ type: GET_ALL_DIETS, payload: allDiets });
@@ -56,7 +55,7 @@ export function getAllDiets() {
 export function filterRecipesByName(name) {
   return async (dispatch) => {
     // dispatch(updateLoading());
-    const { data } = await axios(`${baseUrl}/recipes?name=${name}`);
+    const { data } = await axios(`${BASE_URL}/recipes?name=${name}`);
     // dispatch(updateLoading());
 
     dispatch({ type: FILTER_RECIPES_BY_NAME, payload: data });
@@ -74,7 +73,7 @@ export function filterByDietType(dietName) {
   return async (dispatch) => {
     // dispatch(updateLoading());
     const { data } = await axios(
-      `${baseUrl}/diets/related/?dietName=${dietName}`
+      `${BASE_URL}/diets/related/?dietName=${dietName}`
     );
     // dispatch(updateLoading());
 

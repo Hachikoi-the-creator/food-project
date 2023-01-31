@@ -6,7 +6,7 @@ import { OrderedList, RecipeStyles } from "../components/styles/RecipeDetails";
 
 export default function RecipeDetails() {
   // todo: verify if we have X data if the info doesn't come from the DB
-  const baseUrl = "http://localhost:1313";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // import.meta.env.VITE_API_BASE_URL;
 
   const locationHook = useLocation();
@@ -17,7 +17,7 @@ export default function RecipeDetails() {
   useEffect(() => {
     // get extra info from recipe with ID
     (async () => {
-      const { data: recipe } = await axios(`${baseUrl}/recipes/id/${id}`);
+      const { data: recipe } = await axios(`${BASE_URL}/recipes/id/${id}`);
       setRecipeData(recipe);
     })();
   }, []);
