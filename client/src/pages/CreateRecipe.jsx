@@ -38,11 +38,11 @@ export default function CreateRecipe() {
   const blurHandler = (key, value) => {
     // returns true or string with error description
     const isValid = inputsValidators[key](value);
-    console.log(isValid, "key: " + key, "value: " + value);
+    // console.log(isValid, "key: " + key, "value: " + value);
 
     if (isValid.length) {
       //show modal that tells the error and how to solve it
-      console.log("error in " + key);
+      // console.log("error in " + key);
       setError(`Error in ${key} validation`);
     } else {
       setFormData((prev) => ({ ...prev, [key]: value }));
@@ -59,7 +59,7 @@ export default function CreateRecipe() {
       const updatedArr = alreadySelected
         ? prev.diets.filter((e) => e !== value)
         : [...prev.dietTypes, value];
-      console.log(value, updatedArr);
+      // console.log(value, updatedArr);
 
       return { ...prev, dietTypes: updatedArr };
     });
@@ -75,7 +75,7 @@ export default function CreateRecipe() {
     setFormData((prev) => {
       const copy = [...prev.ingredientsList];
       copy.splice(pseudoID, 1, ingObject);
-      console.log("updated parent: ", copy);
+      // console.log("updated parent: ", copy);
 
       return { ...prev, ingredientsList: copy };
     });
@@ -86,7 +86,7 @@ export default function CreateRecipe() {
     e.preventDefault();
     // check if there's a error in the state error
     if (error.length) {
-      console.log("Theres an error in some innputs", error.toString());
+      // console.log("Theres an error in some innputs", error.toString());
       return;
     }
 
@@ -98,15 +98,15 @@ export default function CreateRecipe() {
       );
 
     if (error.length || enoughIngredients) {
-      console.log("Err in some state take a look for yourself mf", formData);
+      // console.log("Err in some state take a look for yourself mf", formData);
     } else {
-      console.log("All inputs area valid pog");
+      // console.log("All inputs area valid pog");
       // don't need FormData with Axios :D
       const res = await axios
         .post(`${BASE_URL}/recipes/add`, formData)
         .catch((err) => console.log("failed to create recipe", err));
 
-      console.log(res.data);
+      console.log("SUCCESS\n", res.data);
     }
   };
 

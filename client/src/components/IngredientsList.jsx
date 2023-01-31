@@ -26,12 +26,12 @@ export default function IngredientsList({
   const errorHandler = (iname, ivalue) => {
     // a string representing the error that will be show on top or hot toast
     const errMsg = `invalid ${iname}; got ${ivalue}`;
-    console.log("errmsg", errMsg);
+    // console.log("errmsg", errMsg);
     mainErrorHandler(errMsg);
   };
 
   const blurHandler = (id, key, value) => {
-    console.log(`id: ${id}, key: ${key}, value: ${value}`);
+    // console.log(`id: ${id}, key: ${key}, value: ${value}`);
 
     switch (key) {
       case "name":

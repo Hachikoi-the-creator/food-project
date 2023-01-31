@@ -1,7 +1,7 @@
 export default function SelectOptions({ options, label, name }) {
   const handleDietTypeChange = (e) => {
     const dietType = e.target.value;
-    console.log(dietType);
+    // console.log(dietType);
   };
 
   return (
