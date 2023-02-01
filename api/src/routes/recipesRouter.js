@@ -74,9 +74,7 @@ recipesRouter.post("/add", async (req, res) => {
       imageUrl,
     });
 
-    res
-      .status(201)
-      .json({ result: "Resource Added Successfully :D", addedRecipe });
+    res.status(201).json({ addedRecipe });
   } catch (error) {
     const { method, originalUrl } = req;
 

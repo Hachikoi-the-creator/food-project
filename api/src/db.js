@@ -34,11 +34,9 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
+// Relationships <3 N:M
 const { Recipe, Diet } = sequelize.models;
 
-// Relationships <3 N:M
 Diet.belongsToMany(Recipe, {
   through: "Diets_Recipes",
   foreignKey: "DietId",

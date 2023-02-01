@@ -50,7 +50,7 @@ module.exports = {
   // * --------------------------------------
   addOneHandler: async (recipeData) => {
     /**
-     * I love these docs
+     * docs
      * https://sequelize.org/docs/v6/advanced-association-concepts/advanced-many-to-many/
      */
     // will throw error if something is wrong
@@ -76,22 +76,9 @@ module.exports = {
       ingredientsList,
     });
 
-    // * Link to Diets table
-    // need to get all diets
-    const allDiets = await Diet.findAll();
-    // then compare the names with the ones I get from the recipe
-    const matchedDiets = allDiets.filter((dietObj) =>
-      recipeData.dietTypes.includes(dietObj.dietName)
-    );
-
-    // once I get those I need to do a forEach on them and add them to the instance of the Recipe I just created
-    matchedDiets.forEach((diet) => {
-      createdRecipe.addDiet(diet);
-    });
-
     // * Link to Diets table BETTER
-    // const allDiets = await Diet.findAll({ where: { name: dietTypes } });
-    // await createdRecipe.addDiets(allDiets);
+    const allDiets = await Diet.findAll({ where: { dietName: dietTypes } });
+    await createdRecipe.addDiets(allDiets);
 
     return createdRecipe;
   },
@@ -135,27 +122,24 @@ module.exports = {
 
     furtherRecipeCheck(updatedRecipe);
 
-    // if exist, just updates and later links, otherwise value overwritten then link diets
-    let result = await Recipe.findByPk(id);
-    if (existRecipe) {
-      result = await Recipe.update(updatedRecipe, {
-        where: { id },
-      });
-    } else {
-      result = await this.addOneHandler(updatedRecipe);
+    const existingRecipe = await Recipe.findByPk(id);
+
+    if (!existingRecipe) {
+      throw new Error("Cannot update, recipe doesn't exist");
     }
 
-    // * Link to Diets table
-    const allDiets = await Diet.findAll();
-    const matchedDiets = allDiets.filter((dietObj) =>
-      updatedRecipe.dietTypes.includes(dietObj.dietName)
-    );
-
-    matchedDiets.forEach((diet) => {
-      result.addDiet(diet);
+    await Recipe.update(updatedRecipe, {
+      where: { id },
     });
 
-    return result;
+    // * Link to Diets table BETTER
+    const allDiets = await Diet.findAll({
+      where: { dietName: updatedRecipe.dietTypes },
+    });
+
+    await existingRecipe.addDiets(allDiets);
+
+    return existingRecipe;
   },
 
   // * -------------------------------------

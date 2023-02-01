@@ -29,6 +29,15 @@ module.exports = (database) => {
         },
       },
       // * --------------------------
+      imageUrl: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          len: [10, 120],
+        },
+        unique: true,
+      },
+      // * --------------------------
       healthyness: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -50,15 +59,6 @@ module.exports = (database) => {
             return value.every((e) => e.length > 5);
           },
         },
-      },
-      // * --------------------------
-      imageUrl: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        validate: {
-          len: [10, 120],
-        },
-        unique: true,
       },
       // * --------------------------
       // tricky way of storing an Object[]
