@@ -111,3 +111,18 @@ button[type="submit"] {
   text-decoration: underline;
   margin-top: 1rem;
 }
+
+/* extra stuff btns in create recipe */
+.middle-btn {
+  margin: 1rem;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: none;
+  font-family: inherit;
+}
