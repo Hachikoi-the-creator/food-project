@@ -10,7 +10,7 @@ export default function RecipesContainer() {
   const filteredRecipes = useSelector((state) => state.filteredRecipes);
   const [page, setPage] = useState(1);
   // redux is not instant
-  const pagesRecipes = filteredRecipes?.slice((page - 1), page * 10);
+  const pagesRecipes = filteredRecipes?.slice((page - 1) * 10, page * 10);
 
   return (
     <MainContainer className="recipes-container">

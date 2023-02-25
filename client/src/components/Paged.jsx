@@ -1,5 +1,12 @@
-import React from "react";
 import { GenericFlexContainer, ButtonsList } from "./styles/FilterStuff";
+// <BsArrowRight/> - one to the right
+// BsBoxArrowInRight - until the end
+import {
+  BsArrowRight,
+  BsArrowLeft,
+  BsBoxArrowInRight,
+  BsBoxArrowInLeft,
+} from "react-icons/bs";
 
 export default function Paged({ total, page, setPage }) {
   const totalPages = Math.ceil(total / 10);
@@ -11,7 +18,21 @@ export default function Paged({ total, page, setPage }) {
         {/* START */}
         {page >= 4 && (
           <li>
-            <button onClick={() => setPage(1)}>{"<<"}</button>
+            <button onClick={() => setPage(1)} className="btn-icon">
+              <BsBoxArrowInLeft size={25} />
+            </button>
+          </li>
+        )}
+
+        {/* page - 1 icon */}
+        {page >= 2 && (
+          <li>
+            <button
+              onClick={() => setPage((prev) => prev - 1)}
+              className="btn-icon"
+            >
+              <BsArrowLeft size={25} />
+            </button>
           </li>
         )}
 
@@ -32,6 +53,8 @@ export default function Paged({ total, page, setPage }) {
             </button>
           </li>
         )}
+
+        {/* CURRENT BTN */}
         <li>
           <button className="curr-page">{page}</button>
         </li>
@@ -54,10 +77,27 @@ export default function Paged({ total, page, setPage }) {
           </li>
         )}
 
+        {/* page + 1 icon */}
+        {page + 2 <= totalPages && (
+          <li>
+            <button
+              onClick={() => setPage((prev) => prev + 1)}
+              className="btn-icon"
+            >
+              <BsArrowRight size={25} />
+            </button>
+          </li>
+        )}
+
         {/* END */}
         {page + 4 <= totalPages && (
           <li>
-            <button onClick={() => setPage(totalPages - 1)}>{">>"}</button>
+            <button
+              onClick={() => setPage(totalPages - 1)}
+              className="btn-icon"
+            >
+              <BsBoxArrowInRight size={25} />
+            </button>
           </li>
         )}
       </ButtonsList>

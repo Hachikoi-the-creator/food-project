@@ -23,4 +23,14 @@ export const ButtonsList = styled.ul`
   .curr-page {
     border: white 2px solid;
   }
+
+  .btn-icon {
+    background: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover svg {
+      fill: #303c8d;
+    }
+  }
 `;
