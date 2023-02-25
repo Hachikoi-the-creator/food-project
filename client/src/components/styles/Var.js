@@ -12,3 +12,9 @@ export const MainContainer = styled.div`
     text-align: center;
   }
 `;
+
+export const VarFlexContainer = styled.div`
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+`

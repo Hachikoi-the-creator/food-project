@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
+  AddRemoveBtn,
   FormInnerWrapper,
+  IngListMainContainer,
   IngredientsListWrapper,
 } from "../components/styles/FormStuff";
 import TextInput from "../components/inputs/TextInput";
 import CheckboxInput from "../components/inputs/CheckboxInput";
 import RangeInput from "../components/inputs/RangeInput";
 import TextareaInput from "../components/inputs/TextareaInput";
-import IngredientComp from "../components/inputs/IngredientsList";
 import {
   ColumnFlexContainer,
   FlexWrapper,
 } from "../components/styles/RecipeMain";
+import IngredientComp from "../components/inputs/IngredientComp"
+import removeSvg from "/minus-btn.svg"
+import addSvg from "/plus-btn.svg"
+import { VarFlexContainer } from "../components/styles/Var";
 
 export default function NewCreateRecipe() {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -25,13 +30,12 @@ export default function NewCreateRecipe() {
   } = useForm({ mode: "onBlur" });
 
   const [dietsObj, setDietsObj] = useState({});
-  const [ingredientsList, setIngredientsList] = useState([
-    { name: "", amount: 0, unit: "" },
-  ]);
+  const [ingAmount, setIngAmount] = useState(1)
 
   const onSubmit = (data) => {
+    // ingredients is an object get the values 
+    // && need to filter only those that have all props
     console.log(data);
-    console.log(dietsObj, ingredientsList);
   };
 
   const checkboxClickHandler = (dietName) => {
@@ -43,38 +47,17 @@ export default function NewCreateRecipe() {
     });
   };
 
-  const updateIngredient = (index, key, value) => {
-    setIngredientsList((prev) => {
-      // const updatedIngs = { ...prev[index] };
-      // const updatedState = [...prev];
+  const removeIngBtn = () => {
+    if (ingAmount === 1) return
+    setIngAmount(prev => prev - 1)
+  }
 
-      // updatedIngs[key] = value;
-      // updatedState[index] = updatedIngs;
-      // console.log(updatedState);
-
-      prev[index][key] = value;
-      // console.log(prev);
-      return prev;
-    });
-  };
-
-  const addOneMoreIngredient = () => {
-    setIngredientsList((prev) => [...prev, { name: "", amount: 0, unit: "" }]);
-  };
-
-  const removeLastIng = () => {
-    if (ingredientsList.length === 1) return;
-
-    setIngredientsList((prev) => {
-      const copy = [...prev];
-      copy.pop();
-      return copy;
-    });
-  };
+  /* console.log( watch("ingredientsList")) */
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormInnerWrapper>
+
         <div>
           <TextInput
             options={{ maxLength: 20, required: true }}
@@ -83,7 +66,7 @@ export default function NewCreateRecipe() {
             {...{ errors }}
           />
 
-          <TextareaInput
+          {/* <TextareaInput
             options={{ minLength: 10, required: false }}
             name="desc"
             label="Enter food description"
@@ -104,11 +87,10 @@ export default function NewCreateRecipe() {
             step={10}
           />
         </div>
-        {/* 
 
         <div>
           <TextInput
-            options={{ maxLength: 20, required: true }}
+            options={{ minLength: 10, required: true }}
             name="image url"
             {...{ register }}
             {...{ errors }}
@@ -120,10 +102,28 @@ export default function NewCreateRecipe() {
             label="desc ; separated"
             {...{ register }}
             {...{ errors }}
-          /> 
+          /> */}
         </div>
-          */}
       </FormInnerWrapper>
+
+      <h2>Ingredients</h2>
+
+      <VarFlexContainer>
+        <AddRemoveBtn type="button" onClick={() => setIngAmount(prev => prev + 1)}>
+          <img src={addSvg} alt="add another ingredient" />
+        </AddRemoveBtn>
+
+        <AddRemoveBtn type="button" onClick={removeIngBtn}>
+          <img src={removeSvg} alt="remove last ingredient" />
+        </AddRemoveBtn>
+      </VarFlexContainer>
+
+      <IngListMainContainer>
+        {Array(ingAmount).fill(0).map((_, i) => (
+          <IngredientComp {...{ register }} index={i} key={i} />
+        ))
+        }
+      </IngListMainContainer>
 
       {/* <CheckboxInput
         resetDiets={() => setDietsObj({})}

@@ -120,6 +120,36 @@ export const CheckboxInputStyled = styled.div`
   }
 `;
 
-export const IngredientsListWrapper = styled.div`
-  border: 1px solid red;
+export const IngListMainContainer = styled.div`
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  justify-content:center;
+  width:80%;
+  margin: 1rem 10%;
 `;
+
+export const IngredientsListWrapper = styled.div`
+  border: 1px solid pink;
+  background-color: #ae2eff3b;
+  border-radius:0.5rem; 
+  padding:0.5rem;
+  display:flex;
+  flex-direction:column;
+  width:20%; 
+  min-width:20ch;
+
+ > input {
+    margin-bottom:1.3rem;
+  }
+`;
+
+export const AddRemoveBtn = styled.button`
+  all:unset; 
+  cursor:pointer;
+  margin-top:1rem;
+
+  img {
+    width: 5ch;
+  }
+`
