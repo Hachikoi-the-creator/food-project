@@ -24,13 +24,13 @@ module.exports = {
     if (!name)
       throw new Error("Invalid query type :", (typeof name).toString());
 
-    // ? Better way guarrantees a result from API (70k+ options)
-    // const { data: rndRecipes } = await axios(
-    //   `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${name}&number=${resNum}`
-    // );
+    // ? Better way guarantees a result from API (70k+ options)
     const { data: rndRecipes } = await axios(
-      `https://api.spoonacular.com/recipes/complexSearch?number=${resNum}&addRecipeInformation=true&apiKey=${API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${name}&number=${resNum}`
     );
+    // const { data: rndRecipes } = await axios(
+    //   `https://api.spoonacular.com/recipes/complexSearch?number=${resNum}&addRecipeInformation=true&apiKey=${API_KEY}`
+    // );
 
     const foundInDb = await Recipe.findAll({
       where: { name: { [Op.substring]: name } },

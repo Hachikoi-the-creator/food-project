@@ -34,6 +34,8 @@ a:hover {
   color: #535bf2;
 }
 
+h1,h2,h3,h4,h5{text-align: center;}
+
 button {
   padding: 0.2rem 0.7rem;
   border-radius: 8px;
@@ -110,4 +112,19 @@ button[type="submit"] {
   font-size: 1.3rem;
   text-decoration: underline;
   margin-top: 1rem;
+}
+
+/* extra stuff btns in create recipe */
+.middle-btn {
+  margin: 1rem;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: none;
+  font-family: inherit;
 }

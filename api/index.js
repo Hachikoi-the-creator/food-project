@@ -3,8 +3,7 @@ const { conn } = require("./src/db.js");
 
 const PORT = process.env.PORT || 1313;
 
-// { alter: true }
-// { force: true }
+// { alter | force: true }
 conn.sync({ alter: true }).then(() => {
   server.listen(PORT, () => {
     console.log(`-_-listening on localhost:${PORT}`);

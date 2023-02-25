@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const OrderedList = styled.ol`
-  list-style: upper-roman;
+  list-style: dots;
 `;
 
 export const RecipeStyles = styled.div`
@@ -24,4 +24,4 @@ export const RecipeStyles = styled.div`
 
   .diets-list {
   }
-`;
+  `;
