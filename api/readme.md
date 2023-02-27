@@ -10,6 +10,7 @@
 
 - GET **diets/all** : Get all diets from DB
 - GET **diets/id/:id** : get a single diet from BD by UUID
+
 - GET **related/?dietName** : Gets all recipes related to that diet (DB & API)
 - POST **diets/add?newDiet=<DietName>** : Add a diet by name to DB
 - DELETE **diets/del?dietId=<DietId>** : Delete Diet From DB

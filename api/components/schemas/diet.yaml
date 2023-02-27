@@ -1,0 +1,12 @@
+# Get all diet response
+type: object
+properties:
+  id:
+    type: string
+    description: UUID of the diet type
+  dietName:
+    type: string
+    description: name of the diet
+  createdInDb:
+    type: boolean
+    description: Wheter or not it was crated within the app (added by som user/admin)

@@ -5,8 +5,8 @@ import SearchBar from "../components/SearchBar";
 import { apiRecipesFetch } from "../redux/actions";
 
 export default function Home() {
+  const a = 3 === 10;
   const dispatcher = useDispatch();
-
   useEffect(() => {
     dispatcher(apiRecipesFetch());
   }, []);

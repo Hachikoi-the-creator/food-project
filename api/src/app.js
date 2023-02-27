@@ -8,7 +8,7 @@ require("./db.js");
 
 const server = express();
 
-server.name = "API";
+require("../swagger")(server);
 
 server.use(express.json());
 server.use(cookieParser());
