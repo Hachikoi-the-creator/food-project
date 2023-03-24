@@ -8,8 +8,6 @@ require("./db.js");
 
 const server = express();
 
-require("../swagger")(server);
-
 server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));
