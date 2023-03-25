@@ -1,6 +1,15 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { filterRecipesByName } from "../redux/actions";
+
+const SearchSection = styled.section`
+  padding-top: 2rem;
+
+  > * {
+    margin: 0.3rem;
+  }
+`;
 
 export default function SearchBar() {
   const dispatcher = useDispatch();
@@ -16,7 +25,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="name-search">
+    <SearchSection className="name-search">
       <label htmlFor="food-name">Search For Food</label>
       <input
         type="text"
@@ -25,6 +34,6 @@ export default function SearchBar() {
         ref={inputRef}
       />
       <button onClick={searchHandler}>Search</button>
-    </div>
+    </SearchSection>
   );
 }

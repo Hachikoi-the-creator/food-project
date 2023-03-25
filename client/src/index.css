@@ -36,6 +36,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+body {
+  font-size: 1.3rem;
+}
+
 * {
   margin: 0;
   padding: 0;

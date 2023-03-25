@@ -4,6 +4,11 @@ import Filters from "../components/Filters";
 import RecipesContainer from "../components/RecipesContainer";
 import SearchBar from "../components/SearchBar";
 import { apiRecipesFetch } from "../redux/actions";
+import styled from "styled-components";
+
+const Container = styled.div`
+  padding-top: 2rem;
+`;
 
 export default function Home() {
   const dispatcher = useDispatch();
@@ -13,10 +18,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home">
-      <Filters />
+    <Container className="home">
       <SearchBar />
+      <Filters />
       <RecipesContainer />
-    </div>
+    </Container>
   );
 }

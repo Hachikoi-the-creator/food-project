@@ -7,6 +7,28 @@ import {
 } from "../redux/actions";
 import DietTypesSelector from "./DietTypesSelector";
 import { GenericFlexContainer } from "./styles/FilterStuff";
+import { ImSortAlphaAsc, ImSortAlphaDesc } from "react-icons/im";
+import styled from "styled-components";
+
+const AlphaOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .options-btns {
+    display: flex;
+    justify-content: space-evenly;
+  }
+`;
+
+const FiltersSection = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  /* @media (min-width: 800px){
+    flex-direction: row;
+  } */
+`;
 
 class Filters extends Component {
   handleDietAlpha(isAscendingOrder) {
@@ -15,17 +37,23 @@ class Filters extends Component {
 
   render() {
     return (
-      <div className="filter-section">
+      <FiltersSection className="filter-section">
         <GenericFlexContainer className="aplha-filter">
-          <p>by Alphabetic order</p>
-          <button onClick={() => this.handleDietAlpha(true)}>Ascending</button>
-          <button onClick={() => this.handleDietAlpha(false)}>
-            Descending
-          </button>
+          <AlphaOptions className="alpha-options">
+            <p>Alphabetic order</p>
+            <div className="options-btns">
+              <button onClick={() => this.handleDietAlpha(true)}>
+                <ImSortAlphaAsc />
+              </button>
+              <button onClick={() => this.handleDietAlpha(false)}>
+                <ImSortAlphaDesc />
+              </button>
+            </div>
+          </AlphaOptions>
         </GenericFlexContainer>
 
         <DietTypesSelector />
-      </div>
+      </FiltersSection>
     );
   }
 }
