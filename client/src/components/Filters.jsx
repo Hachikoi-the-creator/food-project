@@ -28,6 +28,19 @@ const FiltersSection = styled.section`
   /* @media (min-width: 800px){
     flex-direction: row;
   } */
+
+  .btn-pack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    flex-direction: column;
+  }
+
+  & .btn-pack:first-child {
+    border-right: 1px solid var(--dark-blue);
+    padding-right: 1rem;
+  }
 `;
 
 class Filters extends Component {
@@ -42,12 +55,19 @@ class Filters extends Component {
           <AlphaOptions className="alpha-options">
             <p>Alphabetic order</p>
             <div className="options-btns">
-              <button onClick={() => this.handleDietAlpha(true)}>
-                <ImSortAlphaAsc />
-              </button>
-              <button onClick={() => this.handleDietAlpha(false)}>
-                <ImSortAlphaDesc />
-              </button>
+              <div className="btn-pack">
+                <span>Asc</span>
+                <button onClick={() => this.handleDietAlpha(true)}>
+                  <ImSortAlphaAsc />
+                </button>
+              </div>
+
+              <div className="btn-pack">
+                <span>Desc</span>
+                <button onClick={() => this.handleDietAlpha(false)}>
+                  <ImSortAlphaDesc />
+                </button>
+              </div>
             </div>
           </AlphaOptions>
         </GenericFlexContainer>
