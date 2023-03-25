@@ -1,11 +1,33 @@
+/* .pal2 {
+  --yellow: rgb(216, 204, 52);
+  --skin: rgb(229, 183, 105);
+  --pink: rgb(242, 183, 159);
+  --white: rgb(254, 212, 231);
+  --grey: rgb(237, 201, 255);
+}
+
+.pal3 {
+  --pink: rgb(224, 175, 160);
+  --white: rgb(244, 243, 238);
+  --grey: rgb(188, 184, 177);
+  --light-dark: rgb(138, 129, 124);
+  --dark: rgb(70, 63, 58);
+} */
+
 :root {
+  --dark-blue: rgb(44, 71, 160);
+  --blue: rgb(137, 176, 174);
+  --light-blue: rgb(190, 227, 219);
+  --white: rgb(250, 249, 249);
+  --pink: rgb(255, 186, 249);
+
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 82.5%;
   line-height: 24px;
   font-weight: 400;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: black;
+  background-color: var(--blue);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,7 +56,13 @@ a:hover {
   color: #535bf2;
 }
 
-h1,h2,h3,h4,h5{text-align: center;}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-align: center;
+}
 
 button {
   padding: 0.2rem 0.7rem;

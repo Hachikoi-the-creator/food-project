@@ -17,7 +17,7 @@ class Filters extends Component {
     return (
       <div className="filter-section">
         <GenericFlexContainer className="aplha-filter">
-          <p>by Alpabatich order</p>
+          <p>by Alphabetic order</p>
           <button onClick={() => this.handleDietAlpha(true)}>Ascending</button>
           <button onClick={() => this.handleDietAlpha(false)}>
             Descending

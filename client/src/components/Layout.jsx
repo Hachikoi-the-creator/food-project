@@ -1,12 +1,13 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { LayoutMain } from "./styles/LayoutStuff";
 
 export default function Layout({ children }) {
   return (
-    <>
+    <LayoutMain>
       <Navbar />
-      <div style={{ marginTop: "3rem", minHeight: "87vh" }}>{children}</div>
+      <main>{children}</main>
       <Footer />
-    </>
+    </LayoutMain>
   );
 }
