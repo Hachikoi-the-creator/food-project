@@ -12,7 +12,6 @@ export default function App() {
       <Route path={"/"} element={<Landing />} />
       <Route path={"/home"} element={<Home />} />
       <Route path={"/details/:id"} element={<RecipeDetails />} />
-      {/*<Route path={"/create"} element={<CreateRecipe />} />*/}
       <Route path={"/new-create"} element={<NewCreateRecipe />} />
       <Route path={"*"} element={<Custom404 />} />
     </Routes>
